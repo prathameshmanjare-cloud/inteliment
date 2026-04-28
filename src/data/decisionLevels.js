@@ -1,0 +1,38 @@
+export const decisionLevels = [
+  {
+    level: 1,
+    title: 'Transactional',
+    subtitle: 'Revenue and customer experience happen here, in milliseconds.',
+    controls: 'Lead response, pricing, service resolution, customer experience',
+    impact: 'Higher conversions, improved retention, faster value delivery',
+    color: '#00B4D8',
+    icon: 'Zap',
+  },
+  {
+    level: 2,
+    title: 'Operational',
+    subtitle: 'Efficiency and cost are controlled here, decision by decision.',
+    controls: 'Workflows, resource allocation, process efficiency, cost structures',
+    impact: 'Increased productivity, lower costs, scalable execution',
+    color: '#00D4AA',
+    icon: 'Settings',
+  },
+  {
+    level: 3,
+    title: 'Strategic',
+    subtitle: 'Growth is won or lost here, one investment choice at a time.',
+    controls: 'Market selection, growth initiatives, investment allocation, strategic focus',
+    impact: 'Stronger growth, better positioning, higher ROI on investments',
+    color: '#52EFD0',
+    icon: 'Target',
+  },
+  {
+    level: 4,
+    title: 'Futuristic',
+    subtitle: 'Market leadership is built here, before the market knows it.',
+    controls: 'Emerging signals, technology adoption, new business models, long-term positioning',
+    impact: 'Early-mover advantage, sustainable differentiation, long-term value',
+    color: '#A78BFA',
+    icon: 'Telescope',
+  },
+]

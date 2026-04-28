@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core -->
+  <url><loc>https://inteliment.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://inteliment.com/decision-intelligence</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Solutions -->
+  <url><loc>https://inteliment.com/solutions</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/solutions/data-engineering</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/solutions/data-science</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/solutions/visualization</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/solutions/ai-agents</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/solutions/enterprise-di</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Industries -->
+  <url><loc>https://inteliment.com/industries</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/insurance</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/banking</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/healthcare</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/manufacturing</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/energy</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/telecom</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/automotive</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/retail-ecommerce</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/finance</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/technology</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/logistics</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/industries/media</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Services -->
+  <url><loc>https://inteliment.com/services</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Impact & Insights -->
+  <url><loc>https://inteliment.com/impact</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/impact/actuarial-decision-pipelines</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/impact/sas-to-cloud-migration</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/impact/unified-claims-integration</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/insights</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://inteliment.com/insights/what-is-decision-intelligence</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/insights/cost-of-decision-latency</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/insights/data-lake-to-decision-engine</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/insights/decision-intelligence-playbook-gccs</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Tools -->
+  <url><loc>https://inteliment.com/assessment</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/roi-calculator</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Company -->
+  <url><loc>https://inteliment.com/about</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/about/leadership</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/inteli-me</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://inteliment.com/news</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://inteliment.com/csr</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+
+  <!-- AI & Innovation -->
+  <url><loc>https://inteliment.com/inteli-labs</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/hub</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Regional -->
+  <url><loc>https://inteliment.com/australia</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <url><loc>https://inteliment.com/inteli-ai</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Contact & Legal -->
+  <url><loc>https://inteliment.com/contact</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://inteliment.com/privacy</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://inteliment.com/terms</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://inteliment.com/cookies</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+</urlset>

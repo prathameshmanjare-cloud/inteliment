@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary:        #4C5664;   /* brand-logo-dark */
+    --color-secondary:      #5BA3D1;   /* brand-blue */
+    --color-accent:         #51B198;   /* brand-dark-green */
+    --color-surface:        #F8FAFC;
+    --color-text-primary:   #334155;   /* neutral-700 */
+    --color-text-secondary: #94A3B8;   /* neutral-400 */
+    --color-error:          #E63946;
+    --color-success:        #10B981;
+    --color-warning:        #F59E0B;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-navy font-body text-white antialiased;
+    background-color: #1C2127;   /* dark-800 */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  code, pre, kbd {
+    @apply font-mono;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: #F8F9FA;
+    color: #1C2127;
+  }
+
+  :focus-visible {
+    outline: 2px solid #5BA3D1;   /* brand-blue */
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Gradient mesh background for hero sections */
+  .mesh-bg {
+    background-color: #2B323C;   /* dark-700 */
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(91, 163, 209, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(81, 177, 152, 0.10) 0%, transparent 40%),
+      radial-gradient(ellipse at 60% 80%, rgba(73, 130, 167, 0.08) 0%, transparent 50%);
+    background-size: 200% 200%;
+    animation: gradientShift 12s ease infinite;
+  }
+
+  /* Light section background — pure white with subtle dot grid */
+  .section-light {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(circle at 1px 1px, rgba(91, 163, 209, 0.06) 1px, transparent 0);
+    background-size: 28px 28px;
+  }
+
+  /* Btn primary */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-display font-semibold text-navy transition-all duration-200 hover:opacity-90 hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-navy;
+    background: linear-gradient(135deg, #A2EDD9, #72BFF1);
+  }
+
+  /* Btn secondary */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-display font-semibold text-white transition-all duration-200 glass border border-white/20 hover:border-teal hover:shadow-glow-teal hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-teal;
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply w-16 h-1 rounded-full bg-gradient-teal mx-auto;
+  }
+}
+
+@layer utilities {
+  .bg-size-200 {
+    background-size: 200% auto;
+  }
+  .bg-pos-0 {
+    background-position: 0% center;
+  }
+  .bg-pos-100 {
+    background-position: 100% center;
+  }
+}
+
+/* Data pulse animation for SVG paths */
+@keyframes dataPulse {
+  0% { stroke-dashoffset: 200; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.data-pulse-path {
+  stroke-dasharray: 8 4;
+  stroke-dashoffset: 200;
+  animation: dataPulse 3s linear infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
