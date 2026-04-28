@@ -566,13 +566,13 @@ export default function InteliAI() {
         {/* S5 — Inteli-Labs */}
         <InteliLabsSection />
 
-        {/* S6 — CTA */}
+        {/* S6 — CTA 
         <CTABanner
           title="Ready to Put AI to Work in Your Enterprise?"
           subtitle="Start with our Decision Intelligence assessment, understand where AI can have the most impact."
           ctaLabel="Take the DI Assessment"
           ctaTo="/assessment"
-        />
+        />*/}
       </div>
     </>
   )
