@@ -21,7 +21,7 @@ export default function SectionHeading({
           {eyebrow}
         </span>
       )}
-      <h2 className={`font-display font-bold text-display-md md:text-display-lg leading-tight ${light ? 'text-navy' : 'text-white'}`}>
+      <h2 className={`font-display font-bold text-display-md md:text-display-lg leading-tight text-nowrap ${light ? 'text-navy' : 'text-white'}`}>
         {title}
       </h2>
       {subtitle && (
