@@ -11,6 +11,8 @@ import ScrollReveal from '@/components/ui/ScrollReveal'
 import GlassCard from '@/components/ui/GlassCard'
 import { buildPageMeta, breadcrumbJsonLd } from '@/utils/seo'
 import s4Bg from '@/assets/inteliai/s4-bg.svg'
+import hBg from '@/assets/inteliai/hero-bg.svg'
+import s5Bg from '@/assets/inteliai/cover.svg'
 import { no } from 'zod/locales'
 
 /* ── data ── */
@@ -235,7 +237,7 @@ function HeroSectionInteliAI() {
     >
       <motion.div className="absolute inset-0 w-full h-full" style={{ y: bgY }}>
         <img
-          src="/src/assets/inteliai/hero-bg.svg"
+          src={hBg}
           alt=""
           aria-hidden="true"
           style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
@@ -350,7 +352,7 @@ function InteliLabsSection() {
         {/* Background SVG overlay */}
         <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
           <img
-            src="/src/assets/inteliai/cover.svg"
+            src={s5Bg}
             alt=""
             aria-hidden="true"
             style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
