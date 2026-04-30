@@ -355,7 +355,7 @@ function InteliLabsSection() {
             src={s5Bg}
             alt=""
             aria-hidden="true"
-            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
 
@@ -444,6 +444,7 @@ function InteliLabsSection() {
                 </Link>
               </motion.div>
             </motion.div>
+            {/* ── END LEFT ── */}
 
             {/* ── RIGHT: Floating cards diagram ── */}
             <motion.div
@@ -480,7 +481,7 @@ function InteliLabsSection() {
 
               {/* Center pill */}
               <motion.div
-                className="absolute flex items-center gap-2.5 px-5 py-3 rounded-full"
+                className="absolute flex items-center gap-2 px-4 py-2.5 rounded-full"
                 style={{
                   top: '50%',
                   left: '50%',
@@ -498,27 +499,28 @@ function InteliLabsSection() {
                 transition={{ duration: 0.6, delay: 0.35 }}
               >
                 <div
-                  className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                  className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
                   style={{ background: 'rgba(105,165,203,0.25)' }}
                 >
-                  <Icons.FlaskConical size={15} style={{ color: '#7ec8e3' }} />
+                  <Icons.FlaskConical size={13} style={{ color: '#7ec8e3' }} />
                 </div>
-                <span className="font-bold text-white text-sm">Inteli-Labs</span>
+                <span className="font-bold text-white text-xs">Inteli-Labs</span>
               </motion.div>
 
-              {/* Card — TOP (centered) */}
+              {/* Card — TOP */}
               <motion.div
-                className="absolute px-5 py-3 rounded-2xl text-sm font-medium"
+                className="absolute rounded-2xl text-xs font-semibold text-center"
                 style={{
-                  top: '4%',
+                  top: '6%',
                   left: '50%',
                   transform: 'translateX(-50%)',
+                  padding: '10px 18px',
                   background: 'rgba(255,255,255,0.85)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
                   border: '1px solid rgba(105,165,203,0.2)',
                   boxShadow: '0 4px 20px rgba(42,125,181,0.08)',
-                  color: '#1a3a5c',
+                  color: '#4a90b8',
                   whiteSpace: 'nowrap',
                   zIndex: 5,
                 }}
@@ -531,18 +533,20 @@ function InteliLabsSection() {
 
               {/* Card — LEFT */}
               <motion.div
-                className="absolute px-5 py-3 rounded-2xl text-sm font-medium"
+                className="absolute rounded-2xl text-xs font-semibold text-center"
                 style={{
                   top: '50%',
-                  left: '0%',
+                  left: '1%',
                   transform: 'translateY(-50%)',
+                  padding: '10px 14px',
+                  maxWidth: '130px',
                   background: 'rgba(255,255,255,0.85)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
                   border: '1px solid rgba(105,165,203,0.2)',
                   boxShadow: '0 4px 20px rgba(42,125,181,0.08)',
-                  color: '#1a3a5c',
-                  whiteSpace: 'nowrap',
+                  color: '#4a90b8',
+                  lineHeight: '1.4',
                   zIndex: 5,
                 }}
                 initial={{ opacity: 0, x: -16 }}
@@ -554,18 +558,20 @@ function InteliLabsSection() {
 
               {/* Card — RIGHT */}
               <motion.div
-                className="absolute px-5 py-3 rounded-2xl text-sm font-medium"
+                className="absolute rounded-2xl text-xs font-semibold text-center"
                 style={{
                   top: '50%',
-                  right: '0%',
+                  right: '1%',
                   transform: 'translateY(-50%)',
+                  padding: '10px 14px',
+                  maxWidth: '140px',
                   background: 'rgba(255,255,255,0.85)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
                   border: '1px solid rgba(105,165,203,0.2)',
                   boxShadow: '0 4px 20px rgba(42,125,181,0.08)',
-                  color: '#1a3a5c',
-                  whiteSpace: 'nowrap',
+                  color: '#4a90b8',
+                  lineHeight: '1.4',
                   zIndex: 5,
                 }}
                 initial={{ opacity: 0, x: 16 }}
@@ -575,19 +581,20 @@ function InteliLabsSection() {
                 Available to clients & partners
               </motion.div>
 
-              {/* Card — BOTTOM (centered) */}
+              {/* Card — BOTTOM */}
               <motion.div
-                className="absolute px-5 py-3 rounded-2xl text-sm font-medium"
+                className="absolute rounded-2xl text-xs font-semibold text-center"
                 style={{
-                  bottom: '4%',
+                  bottom: '6%',
                   left: '50%',
                   transform: 'translateX(-50%)',
+                  padding: '10px 18px',
                   background: 'rgba(255,255,255,0.85)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
                   border: '1px solid rgba(105,165,203,0.2)',
                   boxShadow: '0 4px 20px rgba(42,125,181,0.08)',
-                  color: '#1a3a5c',
+                  color: '#4a90b8',
                   whiteSpace: 'nowrap',
                   zIndex: 5,
                 }}
@@ -597,7 +604,9 @@ function InteliLabsSection() {
               >
                 Constantly evolving research agenda
               </motion.div>
+
             </motion.div>
+            {/* ── END RIGHT ── */}
 
           </div>
         </Container>
@@ -926,7 +935,6 @@ export default function InteliAI() {
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-            style={{ opacity: 0.5 }}
           />
 
           <Container className="relative z-10">

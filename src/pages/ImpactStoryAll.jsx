@@ -4,11 +4,27 @@ import { Shield, Heart, Zap, BarChart2, FileText, ArrowRight, ChevronLeft, Chevr
 import SEOHead from '@/components/ui/SEOHead'
 import { buildPageMeta } from '@/utils/seo'
 import { impactStories } from '@/data/impactStories'
+import { blogs } from '@/data/blogs'
 import imBg from '@/assets/impact/impall-hero.svg'
 
-const ALL_INDUSTRIES = [...new Set(impactStories.map(s => s.industry))]
+function TrophyIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+      style={{ color: '#5BA3D1', opacity: 0.55 }} aria-hidden="true">
+      <path d="M6 9H4a2 2 0 0 1-2-2V5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18 9h2a2 2 0 0 0 2-2V5h-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 17v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M8 21h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M6 3h12v8a6 6 0 0 1-12 0V3Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+const ALL_INDUSTRIES = [...new Set([...impactStories.map(s => s.industry), ...blogs.map(b => b.industry)])]
 const CATEGORY_COUNTS = ALL_INDUSTRIES.reduce((acc, ind) => {
-  acc[ind] = impactStories.filter(s => s.industry === ind).length
+  const storyCount = impactStories.filter(s => s.industry === ind).length
+  const blogCount = blogs.filter(b => b.industry === ind).length
+  acc[ind] = storyCount + blogCount
   return acc
 }, {})
 
@@ -29,19 +45,6 @@ const INDUSTRY_MAP = {
 
 const CARDS_PER_PAGE = 6
 
-function TrophyIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-      style={{ color: '#5BA3D1', opacity: 0.55 }} aria-hidden="true">
-      <path d="M6 9H4a2 2 0 0 1-2-2V5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M18 9h2a2 2 0 0 0 2-2V5h-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12 17v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      <path d="M8 21h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-      <path d="M6 3h12v8a6 6 0 0 1-12 0V3Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 function getPageNums(cur, total) {
   if (total <= 7) return Array.from({ length: total }, (_, i) => i)
   const pages = []
@@ -52,7 +55,6 @@ function getPageNums(cur, total) {
   pages.push(total - 1)
   return pages
 }
-
 
 export default function ImpactStoryAll() {
   const meta = buildPageMeta(
@@ -76,23 +78,26 @@ export default function ImpactStoryAll() {
     setPage(0)
   }
 
-  const filteredStories = useMemo(() => {
-    if (!activeFilters.length) return impactStories
-    return impactStories.filter(s => activeFilters.includes(s.industry))
+  const filteredContent = useMemo(() => {
+    const allContent = [
+      ...impactStories.map(s => ({ ...s, type: 'story' })),
+      ...blogs.map(b => ({ ...b, type: 'blog' })),
+    ]
+    // When no filter is active, show only blogs
+    if (!activeFilters.length) return blogs.map(b => ({ ...b, type: 'blog' }))
+    // When filters are active, show items matching selected categories
+    return allContent.filter(item => activeFilters.includes(item.industry))
   }, [activeFilters])
 
   const cardsPerPage = CARDS_PER_PAGE
-  const totalPages = Math.max(1, Math.ceil(filteredStories.length / cardsPerPage))
+  const totalPages = Math.max(1, Math.ceil(filteredContent.length / cardsPerPage))
 
-  // ── IndustryGrid-style goTo: clamp + set in one shot, no useEffect needed ──
   const goTo = (next) => {
     setPage(Math.max(0, Math.min(totalPages - 1, next)))
   }
 
   const safePage = Math.min(page, totalPages - 1)
-  const visibleStories = filteredStories
-  .slice(safePage * cardsPerPage, safePage * cardsPerPage + cardsPerPage)
-  .slice(0, 6)
+  const visibleContent = filteredContent.slice(safePage * cardsPerPage, safePage * cardsPerPage + cardsPerPage)
   const pageNums = getPageNums(safePage, totalPages)
 
   return (
@@ -182,12 +187,13 @@ export default function ImpactStoryAll() {
         {/* Cards Area */}
         <div className="flex-1 min-w-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4">
-            {visibleStories.map((story,index) => {
-              const Icon = INDUSTRY_MAP[story.industry] || FileText
+            {visibleContent.map((item, index) => {
+              const Icon = INDUSTRY_MAP[item.industry] || FileText
+              const linkPath = item.type === 'story' ? `/impact/${item.slug}` : `/blogs/${item.slug}`
               return (
                 <Link
                   key={`${safePage}-${index}`}
-                  to={`/impact/${story.slug}`}
+                  to={linkPath}
                   className="group block h-full"
                 >
                   <div
@@ -206,17 +212,30 @@ export default function ImpactStoryAll() {
                         style={{ color: '#5BA3D1', border: '1px solid #5BA3D1' }}
                       >
                         <Icon size={14} />
-                        {story.industry}
+                        {item.industry}
                       </span>
-                      <TrophyIcon />
+                      {item.type === 'blog' ? (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color: '#5BA3D1', opacity: 0.55 }} aria-hidden="true">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                          <polyline points="14,2 14,8 20,8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      ) : (
+                        <TrophyIcon />
+                      )}
                     </div>
 
                     <h3 className="font-['Public_Sans'] font-bold text-[16px] leading-snug mb-2 text-[#0D1B2A]">
-                      {story.title}
+                      {item.title}
                     </h3>
 
+                    {item.type === 'blog' && (
+                      <p className="font-['Public_Sans'] text-[11px] mb-2" style={{ color: '#5BA3D1' }}>
+                        {item.date}
+                      </p>
+                    )}
+
                     <p className="font-['Public_Sans'] text-[14px] leading-relaxed text-[#4a6478] flex-1 line-clamp-3">
-                      {story.subtitle}
+                      {item.subtitle}
                     </p>
 
                     <div className="mt-4 ml-auto">
@@ -234,7 +253,7 @@ export default function ImpactStoryAll() {
           </div>
 
           {/* Empty state */}
-          {visibleStories.length === 0 && (
+          {visibleContent.length === 0 && (
             <div className="text-center py-20">
               <p className="font-['Public_Sans'] text-[#8aacbe] text-[15px]">No results match the selected filters.</p>
               <button

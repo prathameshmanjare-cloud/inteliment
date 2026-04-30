@@ -8,8 +8,10 @@ import {
   Impact, ImpactStory, Insights, InsightArticle, Assessment, ROICalculatorPage,
   About, Careers, InteliME, InteliHub, News, CSR,
   Contact, Privacy, Terms, CookiePolicy,
-  Australia, InteliLabs, Leadership, InteliAI, NotFound,ImpactStoryAll
+  Australia, InteliLabs, Leadership, InteliAI, NotFound, ImpactStoryAll
 } from '@/routes'
+import Blogs from '@/pages/Blogs'
+import BlogStory from '@/pages/BlogStory'
 
 function PageSkeleton() {
   return (
@@ -56,6 +58,8 @@ function AnimatedRoutes() {
           <Route path="/impact" element={<Impact />} />
           <Route path="/impact/:slug" element={<ImpactStory />} />
           <Route path="/impact/all" element={<ImpactStoryAll />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:slug" element={<BlogStory />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/insights/:slug" element={<InsightArticle />} />
           <Route path="/assessment" element={<Assessment />} />

@@ -229,7 +229,7 @@ export const industries = [
     ],
     platforms: ['Rubiscape', 'Databricks', 'Azure', 'Snowflake', 'Power BI'],
     relatedStory: null,
-    bannerImage: '/images/industries/automotive.png',
+    bannerImage: '/images/industries/automotive.svg',
   },
   {
     slug: 'retail-ecommerce',
