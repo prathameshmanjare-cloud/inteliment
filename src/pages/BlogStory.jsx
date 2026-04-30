@@ -75,15 +75,6 @@ function Hero({ blog }) {
             {blog.subtitle}
           </p>
         </Reveal>
-
-        <Reveal delay={0.34}>
-          <p
-            className="text-[14px] sm:text-[16px] lg:text-[18px] text-white/55 max-w-[600px] leading-relaxed"
-            style={{ fontFamily: "'Public Sans', sans-serif" }}
-          >
-            {blog.date} • {blog.author}
-          </p>
-        </Reveal>
       </div>
     </section>
   )

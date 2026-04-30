@@ -5,7 +5,6 @@ export const blogs = [
     subtitle: 'Data alone is no longer a competitive advantage—intelligence is. Enterprises must evolve from storing data to activating it through AI and LLMs.',
     industry: 'Blogs',
     date: '2026-04-30',
-    author: 'Inteliment Team',
     seoTitle: 'From Data Lakes to LLMs: The AI Enterprise Shift',
     seoDescription: 'Explore how enterprises are moving from data lakes to LLMs to unlock decision intelligence, accelerate AI adoption, and drive business outcomes.',
     focusKeyword: 'Data Lakes',
@@ -34,9 +33,9 @@ But LLMs don't operate in isolation. They require well-engineered, governed, and
 
 ## From BI to AI to Decision Intelligence
 The evolution is clear:
-- **BI:** Static dashboards and historical reporting
-- **AI:** Predictive and prescriptive analytics
-- **Decision Intelligence:** Real-time, automated, and contextual decision-making
+- BI: Static dashboards and historical reporting
+- AI: Predictive and prescriptive analytics
+- Decision Intelligence: Real-time, automated, and contextual decision-making
 
 Enterprises that successfully move from Data Lakes to LLMs are those that integrate this entire stack—seamlessly.
 
@@ -44,18 +43,18 @@ Enterprises that successfully move from Data Lakes to LLMs are those that integr
 At Inteliment, the focus is not just on enabling AI—but on engineering intelligence systems that scale.
 
 ### What This Looks Like
-- **Modern Data Platforms:** Cloud-native, scalable architectures
-- **Strong Data Governance:** Quality, lineage, and compliance frameworks
-- **AI & LLM Integration:** Embedding intelligence into business workflows
-- **BI Modernization:** Transitioning from dashboards to decision systems
+- Modern Data Platforms: Cloud-native, scalable architectures
+- Strong Data Governance: Quality, lineage, and compliance frameworks
+- AI & LLM Integration: Embedding intelligence into business workflows
+- BI Modernization: Transitioning from dashboards to decision systems
 
 Through platforms like Rubiscape and its Analytics CoE models, Inteliment enables enterprises to activate their data—not just store it.
 
 ## Industry Impact: Intelligence in Action
-- **Retail:** Conversational AI enabling real-time demand insights
-- **Banking:** LLMs supporting risk analysis and compliance reporting
-- **Healthcare:** AI-driven patient insights from unstructured data
-- **Manufacturing:** Predictive insights from IoT and operational data
+- Retail: Conversational AI enabling real-time demand insights
+- Banking: LLMs supporting risk analysis and compliance reporting
+- Healthcare: AI-driven patient insights from unstructured data
+- Manufacturing: Predictive insights from IoT and operational data
 
 Across industries, the shift is clear: Data lakes store. LLMs interpret. Decision Intelligence acts.
 
