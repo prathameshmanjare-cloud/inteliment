@@ -106,7 +106,7 @@ export default function Impact() {
                   Explore Our Work !
                 </h2>
                 <p className="font-['Public_Sans'] text-sm leading-relaxed max-w-xl text-black">
-                  We don't just build tools; we architect intelligence. Browse our latest work and technical blogs to see how our user-centric approach to data engineering and AI is redefining operational efficiency.
+                  We don't just build tools; we architect intelligence. Browse our latest work to see how our user-centric approach to data engineering and AI is redefining operational efficiency.
                 </p>
               </div>
               <div className="shrink-0 self-start md:self-start mt-1">

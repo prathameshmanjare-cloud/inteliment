@@ -8,8 +8,10 @@ import iconAuto from '@/assets/home/icon-auto.svg'
 import iconOpt from '@/assets/home/icon-opt.svg'
 import iconDeploy from '@/assets/home/icon-deploy.svg'
 import iconTrack from '@/assets/home/icon-track.svg'
+import oldArrow from '@/assets/home/old-arrow.svg'
+import newArrow from '@/assets/home/new-arrow.svg'
 import btIcon from '@/assets/home/bt-icon.svg'
-import { motion, useInView } from 'framer-motion'
+import { motion, NativeAnimationWrapper, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import SEOHead from '@/components/ui/SEOHead'
 import Button from '@/components/ui/Button'
@@ -437,8 +439,6 @@ function Card({ icon: Icon, title, desc, index }) {
 
 function S2Section() {
   const s2Ref = useRef(null)
-  const inView = useInView(s2Ref, { once: true, margin: "-50px" })
-  const CURVE_H = 308;
 
   const centerContent = (
     <motion.div
@@ -447,153 +447,200 @@ function S2Section() {
       transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true }}
       className="flex flex-col items-center text-center"
-      style={{ padding: "0 16px", position: "relative", zIndex: 10 }}
+      style={{ padding: "0px", position: "relative", zIndex: 10 }}
     >
       <motion.span
         initial={{ opacity: 0, y: -8 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         viewport={{ once: true }}
-        className="font-medium tracking-[0.14em] text-gray-300 px-5 py-1.5 rounded-full"
         style={{
-          fontSize:"14px",
-          border: "1px solid rgba(255,255,255,0.14)",
-          background: "rgba(255,255,255,0.04)",
-          marginBottom: 12,
+          fontSize: "14px",
+          fontWeight: 700,
+          color: "rgba(255,255,255,0.55)",
+          border: "1px solid rgba(255,255,255,0.18)",
+          background: "rgba(255,255,255,0.06)",
+          marginBottom: 24,
           display: "inline-block",
+          padding: "6px 20px",
+          borderRadius: 999,
+          fontFamily: "'Public Sans', sans-serif",
         }}
       >
         The Challenge
       </motion.span>
+
       <h2
-        className="text-white font-extrabold leading-tight mb-5"
         style={{
-          fontSize: "clamp(1.4rem, 4vw, 2.6rem)",
+          fontSize: "clamp(1.8rem, 4.5vw, 3rem)",
           fontFamily: "'Public Sans', sans-serif",
-          letterSpacing: "-0.01em",
+          fontWeight: 800,
+          lineHeight: 1.15,
+          marginBottom: 24,
+          color: "#ffffff",
+          textWrap:'nowrap',
         }}
       >
-        Your Business Doesn't Have a Data Problem. It Has a Decision Problem.
+        Your Business Doesn't Have a Data Problem.{" "} <br/>It Has a Decision Problem.
       </h2>
-      <p className="text-gray-400 text-sm leading-relaxed mb-3" style={{ maxWidth: 360, fontSize: '14px' }}>
+
+      <p style={{
+        maxWidth: 560,
+        fontSize: "15px",
+        lineHeight: 1.7,
+        color: "rgba(255,255,255,0.9)",
+        fontFamily: "'Public Sans', sans-serif",
+      }}>
         Every enterprise has data, but few have Decision Velocity. Growth stalls when
-      </p>
-      <p className="text-gray-300 text-sm leading-relaxed" style={{ maxWidth: 360, fontSize: '14px' }}>
-        We bridge the gap between{" "}<br />
-        <span style={{ color: "#60a5fa" }}>
-          "What Happened" and "What to Do Next."
-        </span>
       </p>
     </motion.div>
   );
 
-  const mobileCardVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: (i) => ({
-      opacity: 1, x: 0,
-      transition: { delay: 0.1 + i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-    }),
-  };
+  const cards = [
+    { icon: Clock,        num: "1", title: "Delayed Action",         desc: "Competitors move while insights are still being processed." },
+    { icon: GitBranch,    num: "2", title: "Strategic Drift",        desc: "Goals fail to translate into execution." },
+    { icon: TrendingDown, num: "3", title: "Scattered Intelligence", desc: "Siloed dashboards built on historical data." },
+    { icon: Sparkles,     num: "4", title: "AI Inertia",             desc: "Models exist but are disconnected from outcomes." },
+  ];
 
-  const mobileCardVariantsNew = {
-    hidden: { opacity: 0, x: 20 },
-    visible: (i) => ({
-      opacity: 1, x: 0,
-      transition: { delay: 0.1 + i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-    }),
-  };
+  const bridgeText = (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+      viewport={{ once: true }}
+      style={{
+        textAlign: "center",
+        fontFamily: "'Public Sans', sans-serif",
+        marginTop: 48,
+      }}
+    >
+      <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.9)", marginBottom: 4 }}>
+        We bridge the gap between
+      </p>
+      <p style={{ fontSize: "16px", color: "#60a5fa", fontWeight: 600 }}>
+        "What Happened" and "What to Do Next."
+      </p>
+    </motion.div>
+  );
+
+  const CardItem = ({ icon: Icon, num, title, desc, index }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.1 + index * 0.12, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        padding: "28px 24px 28px 24px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        height: "100%",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius:'15px',
+        backgroundColor:"transparent",
+      }}
+    >
+      {/* Large icon top-left, no box, no border */}
+      <Icon
+        size={72}
+        strokeWidth={1.8}
+        style={{
+          color: "rgba(255,255,255,0.15)",
+          marginBottom: 28,
+        }}
+      />
+
+      <div style={{
+        fontWeight: 700,
+        color: "#60a5fa",
+        fontFamily: "'Public Sans', sans-serif",
+        marginBottom: 10,
+        fontSize:'18px',
+      }}>
+        {num}.{"  "}{title}
+      </div>
+
+      <p style={{
+        fontSize: "15px",
+        lineHeight: 1.65,
+        color: "rgba(255,255,255,0.50)",
+        fontFamily: "'Public Sans', sans-serif",
+        margin: 0,
+      }}>
+        {desc}
+      </p>
+    </motion.div>
+  );
 
   return (
-    <div ref={s2Ref} className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 md:py-16" style={{ background: "#EAF4FA" }}>
+    <div
+      ref={s2Ref}
+      className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 md:py-16"
+      style={{
+        background: `
+          radial-gradient(circle at 20% 20%, rgba(96,165,250,0.15), transparent 40%),
+          radial-gradient(circle at 80% 80%, rgba(56,189,248,0.10), transparent 40%),
+          linear-gradient(135deg, #0B0F14 0%, #1F1F1F 100%)
+        `,
+      }}
+    >
       <div
         className="relative w-full overflow-hidden rounded-2xl"
         style={{
-          background: "#1F1F1F",
-          border: "1px solid rgba(255,255,255,0.08)",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <DashedRings />
-
+        {/* ── MOBILE (< md) ── */}
         <div className="relative z-10 flex flex-col items-center gap-6 p-6 md:hidden">
           {centerContent}
-          <div className="grid grid-cols-2 gap-3 w-full" style={{ alignItems: 'stretch' }}>
-            <motion.div custom={0} variants={mobileCardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={Clock}        title="Delayed Action"         desc="Competitors move while insights are still being processed." index={0} />
-            </motion.div>
-            <motion.div custom={1} variants={mobileCardVariantsNew} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={GitBranch}    title="Strategic Drift"        desc="Goals fail to translate into execution."                    index={1} />
-            </motion.div>
-            <motion.div custom={2} variants={mobileCardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={TrendingDown} title="Scattered Intelligence" desc="Siloed dashboards built on historical data."                index={2} />
-            </motion.div>
-            <motion.div custom={3} variants={mobileCardVariantsNew} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={Sparkles}     title="AI Inertia"             desc="Models exist but are disconnected from outcomes."           index={3} />
-            </motion.div>
+          <div className="grid grid-cols-2 gap-2 w-full">
+            {cards.map((c, i) => (
+              <CardItem key={c.title} {...c} index={i} />
+            ))}
           </div>
+          {bridgeText}
         </div>
 
+        {/* ── TABLET (md → lg) ── */}
         <div className="relative z-10 hidden md:flex lg:hidden flex-col items-center gap-8 p-8">
           {centerContent}
           <div className="grid grid-cols-2 gap-4 w-full max-w-xl">
-            <motion.div custom={0} variants={mobileCardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={Clock}        title="Delayed Action"         desc="Competitors move while insights are still being processed." index={0} />
-            </motion.div>
-            <motion.div custom={1} variants={mobileCardVariantsNew} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={GitBranch}    title="Strategic Drift"        desc="Goals fail to translate into execution."                    index={1} />
-            </motion.div>
-            <motion.div custom={2} variants={mobileCardVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={TrendingDown} title="Scattered Intelligence" desc="Siloed dashboards built on historical data."                index={2} />
-            </motion.div>
-            <motion.div custom={3} variants={mobileCardVariantsNew} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card icon={Sparkles}     title="AI Inertia"             desc="Models exist but are disconnected from outcomes."           index={3} />
-            </motion.div>
+            {cards.map((c, i) => (
+              <CardItem key={c.title} {...c} index={i} />
+            ))}
           </div>
+          {bridgeText}
         </div>
 
+        {/* ── DESKTOP (≥ lg) ── */}
         <div
-          className="relative z-10 hidden lg:flex items-center justify-center w-full"
-          style={{ flex: 1, padding: "60px 40px 60px" }}
+          className="relative z-10 hidden lg:flex flex-col items-center w-full"
+          style={{ padding: "64px 48px" }}
         >
+          <div style={{ maxWidth: 640, marginBottom: 56 }}>
+            {centerContent}
+          </div>
+
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "210px 110px 1fr 110px 210px",
-              alignItems: "center",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 8,
               width: "100%",
-              gap: 0,
             }}
           >
-            <div className="flex flex-col" style={{ gap: 28 }}>
-              <Card icon={Clock}     title="Delayed Action"  desc="Competitors move while insights are still being processed." index={0} />
-              <Card icon={GitBranch} title="Strategic Drift" desc="Goals fail to translate into execution."                    index={1} />
-            </div>
-
-            <div style={{ height: CURVE_H, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img src={leftCurve} alt="" aria-hidden="true" style={{ width: "100%", height: CURVE_H, objectFit: "fill", display: "block" }} />
-            </div>
-
-            {centerContent}
-
-            <div style={{ height: CURVE_H, position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img src={rightCurve} alt="" aria-hidden="true" style={{ width: "100%", height: CURVE_H, objectFit: "fill", display: "block" }} />
-            </div>
-
-            <div className="flex flex-col" style={{ gap: 28 }}>
-              <Card icon={TrendingDown} title="Scattered Intelligence" desc="Siloed dashboards built on historical data."      index={2} />
-              <Card icon={Sparkles}     title="AI Inertia"             desc="Models exist but are disconnected from outcomes." index={3} />
-            </div>
+            {cards.map((c, i) => (
+              <CardItem key={c.title} {...c} index={i} />
+            ))}
           </div>
-        </div>
 
-        <div
-          className="absolute bottom-0 left-0 w-full h-20 pointer-events-none"
-          style={{ background: "linear-gradient(to bottom, transparent, rgba(9,15,26,0.5))", zIndex: 2 }}
-        />
+          {bridgeText}
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
 const fadeUp = {
@@ -653,7 +700,7 @@ function SnakeFlow({ steps, isNew, anim }) {
   });
 
   const labelStyle = (step) => ({
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: 600,
     textAlign: "center",
     lineHeight: 1.25,
@@ -804,6 +851,15 @@ function ThirdSection() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const anim = inView ? "visible" : "hidden";
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    }),
+  };
+
   const oldSteps = [
     { icon: Database,   label: "Data" },
     { icon: LayoutList, label: "Reports" },
@@ -815,59 +871,177 @@ function ThirdSection() {
   const newSteps = [
     { icon: Database,   label: "Data" },
     { icon: Layers,     label: "Context" },
-    { icon: BookOpen,   label: "Recommend ations" },
+    { icon: BookOpen,   label: "Recommendations" },
     { icon: Cpu,        label: "Automated Action" },
     { icon: TrendingUp, label: "Measurable Outcomes", highlight: true },
   ];
 
-  // Mobile/tablet flat card
-  function FlatStepCard({ icon: Icon, label, faded, highlight, isNew }) {
+  const bottomCards = [
+    { title: "Reduced TCO",               sub: "Simplified Stack, Fewer Tools, Lower Costs.",         delay: 8 },
+    { title: "Better Financial Outcomes", sub: "Faster decisions, higher conversion, reduced waste.", delay: 9 },
+  ];
+
+  function StepCard({ icon: Icon, label, faded, highlight, isNew }) {
     return (
       <motion.div
+        whileHover={{ y: -2, scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
-        whileHover={{ scale: 1.02 }}
         style={{
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          gap: 12,
-          padding: "10px 14px",
+          justifyContent: "center",
+          gap: 8,
+          width: 110,
+          minWidth: 90,
+          padding: "16px 10px",
           borderRadius: 12,
           background: highlight
-            ? "linear-gradient(145deg,#c6e5f7,#a8d5ef)"
+            ? "linear-gradient(145deg, #d4edf9, #bfe0f5)"
             : isNew
-              ? "linear-gradient(145deg,#e8f6fd,#d4ecf7)"
+              ? "rgba(255,255,255,0.92)"
               : faded
-                ? "rgba(255,255,255,0.45)"
-                : "rgba(255,255,255,0.82)",
+                ? "rgba(255,255,255,0.5)"
+                : "rgba(255,255,255,0.85)",
           border: highlight
             ? "1.5px solid #3a8fc4"
             : isNew
-              ? "1.5px solid #5BA3D1"
+              ? "1px solid #c0d8ea"
               : faded
                 ? "1px solid #dde8ef"
-                : "1px solid #cddcea",
+                : "1px solid #dbe7f0",
           boxShadow: highlight
-            ? "0 4px 16px rgba(58,143,196,0.22)"
+            ? "0 0 0 3px rgba(58,143,196,0.15), 0 4px 14px rgba(58,143,196,0.18)"
             : isNew
-              ? "0 2px 10px rgba(91,163,209,0.14)"
+              ? "0 2px 8px rgba(91,163,209,0.10)"
               : "none",
-          cursor: "pointer",
+          cursor: "default",
+          flexShrink: 0,
         }}
       >
-        <Icon size={16} color={highlight ? "#1a6a9a" : isNew ? "#5BA3D1" : faded ? "#a0b8cc" : "#495057"} strokeWidth={1.6} />
+        <Icon
+          size={20}
+          color={
+            highlight ? "#1a6a9a"
+            : isNew ? "#5BA3D1"
+            : faded ? "#b0c4d4"
+            : "#6b8fa8"
+          }
+          strokeWidth={1.6}
+        />
         <span style={{
-          fontSize: 13, fontWeight: 600,
-          color: highlight ? "#0d3a5c" : isNew ? "#1a3a54" : faded ? "#9bb0c0" : "#2d5a7a",
+          fontSize: 12,
+          fontWeight: 600,
+          color: highlight ? "#0d3a5c" : isNew ? "#1a3a54" : faded ? "#a0b8c8" : "#3a5f7a",
+          textAlign: "center",
+          lineHeight: 1.3,
           fontFamily: "'Public Sans', sans-serif",
-        }}>{label}</span>
+        }}>
+          {label}
+        </span>
       </motion.div>
     );
   }
 
-  const bottomCards = [
-    { title: "Reduced TCO",              sub: "Simplified Stack, Fewer Tools, Lower Costs.",         delay: 9  },
-    { title: "Better Financial Outcomes", sub: "Faster decisions, higher conversion, reduced waste.", delay: 10 },
-  ];
+  function FlowRow({ steps, isNew, animDelay = 0 }) {
+    return (
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        gap: 4,
+      }}>
+        {steps.map((step, i) => (
+          <React.Fragment key={step.label}>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.45, delay: animDelay + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <StepCard
+                icon={step.icon}
+                label={step.label}
+                faded={step.faded}
+                highlight={step.highlight}
+                isNew={isNew}
+              />
+            </motion.div>
+            {i < steps.length - 1 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.3, delay: animDelay + i * 0.1 + 0.15 }}
+                style={{ display: "flex", alignItems: "center", flexShrink: 0 }}
+              >
+                {i < steps.length - 1 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={inView ? { opacity: 1 } : {}}
+                    transition={{ duration: 0.3, delay: animDelay + i * 0.1 + 0.15 }}
+                    style={{ display: "flex", alignItems: "center", flexShrink: 0 }}
+                  >
+                    <img
+                      src={isNew ? newArrow : oldArrow}
+                      alt=""
+                      style={{ width: 60, height: 60, display: "block" }}
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
+
+  function ModelBox({ title, steps, isNew, delay }) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          width: "100%",
+          borderRadius: 16,
+          border: isNew ? "1.5px solid rgba(91,163,209,0.35)" : "1px solid rgba(91,163,209,0.18)",
+          background: isNew
+            ? "linear-gradient(135deg, rgba(210,234,248,0.65) 0%, rgba(230,244,252,0.50) 100%)"
+            : "linear-gradient(135deg, #C0CDD6 10%, #C4D3DC 100%)",
+          padding: "24px 20px 28px",
+          backgroundImage: isNew
+            ? `linear-gradient(rgba(255,255,255,0.9) 1px, transparent 1px),
+               linear-gradient(90deg, rgba(255,255,255,0.9) 1px, transparent 1px),
+               linear-gradient(135deg, rgba(210,234,248,0.65) 0%, rgba(230,244,252,0.50) 100%)`
+            : `linear-gradient(rgba(255,255,255,1) 1.5px, transparent 1.5px),
+               linear-gradient(90deg, rgba(255,255,255,1) 1.5px, transparent 1.5px),
+               rgba(234,244,250,0.75)`,
+          backgroundSize: "120px 120px, 120px 120px, 100% 100%",
+          boxShadow: isNew
+            ? "0 4px 24px rgba(91,163,209,0.14)"
+            : "0 2px 12px rgba(91,163,209,0.06)",
+        }}
+      >
+        <p style={{
+          fontSize: 16,
+          fontWeight: 700,
+          letterSpacing: "0.08em",
+          color: isNew ? "#1a5a84" : "#4a6f8a",
+          textAlign: "center",
+          marginBottom: 20,
+          fontFamily: "'Public Sans', sans-serif",
+        }}>
+          {title}
+        </p>
+        <div style={{ overflowX: "auto", paddingBottom: 4 }}>
+          <div style={{ minWidth: "fit-content", margin: "0 auto" }}>
+            <FlowRow steps={steps} isNew={isNew} animDelay={delay + 0.1} />
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <>
@@ -879,26 +1053,25 @@ function ThirdSection() {
         ref={ref}
         style={{
           width: "100%",
-          background: "linear-gradient(180deg, #EAF4FA 0%, #C8DFF0 50%, #A8CAE3 100%)",
+          background: "linear-gradient(180deg, #EAF4FA 0%, #CFE3F1 50%, #B8D4EA 100%)",
           fontFamily: "'Public Sans', sans-serif",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "48px 16px",
+          padding: "56px 20px 48px",
         }}
       >
         {/* Badge */}
-        <motion.div initial="hidden" animate={anim} variants={fadeUp} custom={0}>
+        <motion.div initial="hidden" animate={anim} variants={fadeUp} custom={0} style={{ marginBottom: 20 }}>
           <div style={{
             display: "inline-block",
-            border: "1.5px solid #5BA3D1",
+            border: "1px solid #5BA3D1",
             borderRadius: 999,
-            padding: "5px 20px",
-            marginBottom: 24,
-            background: "rgba(255,255,255,0.35)",
+            padding: "5px 22px",
+            background: "rgba(255,255,255,0.40)",
           }}>
-            <span style={{ fontSize: "14px", fontWeight: 600, letterSpacing: "0.15em", color: "#3a7fa8" }}>
+            <span style={{ fontSize: 14, fontWeight: 700, color: "#3A7394", }}>
               The Shift
             </span>
           </div>
@@ -908,166 +1081,39 @@ function ThirdSection() {
         <motion.h2
           initial="hidden" animate={anim} variants={fadeUp} custom={1}
           style={{
-            fontSize: "clamp(1.4rem, 4vw, 2.6rem)",
+            fontSize: "clamp(1.5rem, 4vw, 2.6rem)",
             fontWeight: 800,
-            textAlign: "center",
             color: "#0d2d45",
-            lineHeight: 1.2,
-            marginBottom: 32,
+            lineHeight: 1.15,
+            marginBottom: 40,
             padding: "0 8px",
+            fontFamily: "'Public Sans', sans-serif",
+            textWrap: "nowrap",
           }}
         >
           Don't Go Slow. Move Fast with Clarity and Confidence.
         </motion.h2>
 
-        {/* ── Panel container (reduced size) ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            width: "100%",
-            maxWidth: 1000,          // reduced from 1060
-            borderRadius: 20,
-            overflow: "hidden",
-            border: "1px solid rgba(91,163,209,0.25)",
-            boxShadow: "0 8px 40px rgba(91,163,209,0.12)",
-          }}
-        >
-          {/* ── MOBILE (< sm) ── */}
-          <div className="block sm:hidden">
-            <div style={{
-              background: "#B2C6D2",
-              padding: "24px 16px",
-              borderBottom: "1px solid rgba(91,163,209,0.20)",
-            }}>
-              <p style={{ fontSize: 18, fontWeight: 600, color: "#1F1F1F", marginBottom: 14, textAlign: "right", letterSpacing: "0.03em" }}>Old Model</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {oldSteps.map((step, i) => (
-                  <motion.div key={step.label} custom={i} variants={{ hidden: { opacity: 0, x: -20 }, visible: (i) => ({ opacity: 1, x: 0, transition: { delay: 0.1 + i * 0.1 } }) }} initial="hidden" animate={anim}>
-                    <FlatStepCard icon={step.icon} label={step.label} faded={step.faded} isNew={false} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <div style={{
-              background: "linear-gradient(135deg, rgba(195,228,248,0.70) 0%, rgba(220,240,252,0.55) 100%)",
-              padding: "24px 16px",
-            }}>
-              <p style={{ fontSize: 18, fontWeight: 600, color: "#1F1F1F", marginBottom: 14, textAlign: "left", letterSpacing: "0.03em" }}>New Model</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {newSteps.map((step, i) => (
-                  <motion.div key={step.label} custom={i} variants={{ hidden: { opacity: 0, x: 20 }, visible: (i) => ({ opacity: 1, x: 0, transition: { delay: 0.1 + i * 0.1 } }) }} initial="hidden" animate={anim}>
-                    <FlatStepCard icon={step.icon} label={step.label} highlight={step.highlight} isNew={true} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* ── TABLET (sm → lg) ── */}
-          <div className="hidden sm:grid lg:hidden" style={{ gridTemplateColumns: "1fr 1fr" }}>
-            <div style={{
-              background: "rgba(234,244,250,0.80)",
-              padding: "28px 20px",
-              borderRight: "1px solid rgba(91,163,209,0.20)",
-            }}>
-              <p style={{ fontSize: 20, fontWeight: 700, color: "#1F1F1F", marginBottom: 18, textAlign: "center", letterSpacing: "0.03em" }}>Old Model</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {oldSteps.map((step, i) => (
-                  <motion.div key={step.label} custom={i} variants={{ hidden: { opacity: 0, x: -20 }, visible: (i) => ({ opacity: 1, x: 0, transition: { delay: 0.1 + i * 0.1 } }) }} initial="hidden" animate={anim}>
-                    <FlatStepCard icon={step.icon} label={step.label} faded={step.faded} isNew={false} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <div style={{
-              background: "linear-gradient(135deg, rgba(195,228,248,0.70) 0%, rgba(220,240,252,0.55) 100%)",
-              padding: "28px 20px",
-            }}>
-              <p style={{ fontSize: 20, fontWeight: 700, color: "#1F1F1F", marginBottom: 18, textAlign: "center", letterSpacing: "0.03em" }}>New Model</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {newSteps.map((step, i) => (
-                  <motion.div key={step.label} custom={i} variants={{ hidden: { opacity: 0, x: 20 }, visible: (i) => ({ opacity: 1, x: 0, transition: { delay: 0.1 + i * 0.1 } }) }} initial="hidden" animate={anim}>
-                    <FlatStepCard icon={step.icon} label={step.label} highlight={step.highlight} isNew={true} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* ── DESKTOP (≥ lg) : snake flow layout ── */}
-          <div className="hidden lg:grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
-
-            {/* OLD MODEL PANEL */}
-            <div style={{
-              background: "rgba(234,244,250,0.60)",
-              backdropFilter: "blur(12px)",
-              padding: "28px 32px 36px",
-              borderRight: "1px solid rgba(91,163,209,0.20)",
-              backgroundImage: `
-                linear-gradient(rgba(91,163,209,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(91,163,209,0.06) 1px, transparent 1px),
-                linear-gradient(180deg, #EAF4FA 0%, #C8DFF0 100%)
-              `,
-              backgroundSize: "32px 32px, 32px 32px, 100% 100%",
-            }}>
-              <motion.p
-                initial="hidden" animate={anim} variants={fadeUp} custom={2}
-                style={{ fontSize: 20, fontWeight: 700, color: "#1F1F1F", marginBottom: 24, letterSpacing: "0.04em" }}
-              >
-                Old Model
-              </motion.p>
-              <SnakeFlow steps={oldSteps} isNew={false} anim={anim} />
-            </div>
-
-            {/* NEW MODEL PANEL */}
-            <div style={{
-              background: "linear-gradient(135deg, rgba(195,228,248,0.55) 0%, rgba(220,240,252,0.40) 100%)",
-              backdropFilter: "blur(12px)",
-              padding: "28px 32px 36px",
-              position: "relative",
-              overflow: "hidden",
-              backgroundImage: `
-                linear-gradient(rgba(91,163,209,0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(91,163,209,0.07) 1px, transparent 1px),
-                linear-gradient(135deg, rgba(195,228,248,0.55) 0%, rgba(220,240,252,0.40) 100%)
-              `,
-              backgroundSize: "32px 32px, 32px 32px, 100% 100%",
-            }}>
-              {/* Decorative sparkles */}
-              {[
-                { top: "8%",  left: "72%", size: 20 },
-                { top: "18%", left: "55%", size: 13 },
-                { top: "5%",  left: "40%", size: 9  },
-              ].map(({ top, left, size }, i) => (
-                <motion.svg
-                  key={i} width={size} height={size} viewBox="0 0 24 24" fill="none"
-                  style={{ position: "absolute", top, left, opacity: 0.35, pointerEvents: "none" }}
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 8 + i * 2, repeat: Infinity, ease: "linear" }}
-                >
-                  <path d="M12 2L13.8 10.2L22 12L13.8 13.8L12 22L10.2 13.8L2 12L10.2 10.2Z" fill="#5BA3D1" />
-                </motion.svg>
-              ))}
-
-              <motion.p
-                initial="hidden" animate={anim} variants={fadeUp} custom={2}
-                style={{ fontSize: 20, fontWeight: 700, color: "#1F1F1F", marginBottom: 24, letterSpacing: "0.04em" }}
-              >
-                New Model
-              </motion.p>
-              <SnakeFlow steps={newSteps} isNew={true} anim={anim} />
-            </div>
-          </div>
-        </motion.div>
+        {/* Two model boxes stacked */}
+        <div style={{
+          width: "100%",
+          maxWidth: 980,
+          display: "flex",
+          flexDirection: "column",
+          gap: 16,
+        }}>
+          <ModelBox title="Old Model" steps={oldSteps} isNew={false} delay={0.15} />
+          <ModelBox title="New Model" steps={newSteps} isNew={true}  delay={0.30} />
+        </div>
 
         {/* Bottom stat cards */}
         <div style={{
-          width: "100%", maxWidth: 1000,
+          width: "100%",
+          maxWidth: 980,
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          gap: 16, marginTop: 16,
+          gap: 16,
+          marginTop: 20,
         }}>
           {bottomCards.map(({ title, sub, delay }) => (
             <motion.div
@@ -1076,33 +1122,49 @@ function ThirdSection() {
               whileHover={{ y: -3, boxShadow: "0 10px 28px rgba(91,163,209,0.18)" }}
               whileTap={{ scale: 0.98 }}
               style={{
-                display: "flex", alignItems: "center", gap: 16,
-                padding: "20px 24px", borderRadius: 16,
-                background: "rgba(255,255,255,0.52)",
-                backdropFilter: "blur(8px)",
+                display: "flex",
+                alignItems: "center",
+                gap: 16,
+                padding: "22px 26px",
+                borderRadius: 16,
+                background: "rgba(255,255,255,0.60)",
                 border: "1px solid rgba(91,163,209,0.20)",
                 boxShadow: "0 2px 12px rgba(91,163,209,0.08)",
                 cursor: "pointer",
               }}
             >
               <div style={{
-                width: 40, height: 40, borderRadius: 10, flexShrink: 0,
-                background: "#ffffff", border: "1px solid #ffffff",
+                width: 42, height: 42, borderRadius: 10, flexShrink: 0,
+                background: "rgba(91,163,209,0.12)",
+                border: "1px solid rgba(91,163,209,0.20)",
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
                 <Zap size={18} color="#5BA3D1" strokeWidth={2} />
               </div>
               <div>
-                <p style={{ fontSize: 16, fontWeight: 700, color: "#0d2d45" }}>{title}</p>
-                <p style={{ fontSize: 14, color: "#4a6f8a", marginTop: 2 }}>{sub}</p>
+                <p style={{ fontSize: 16, fontWeight: 700, color: "#0d2d45", fontFamily: "'Public Sans', sans-serif" }}>
+                  {title}
+                </p>
+                <p style={{ fontSize: 13, color: "#4a6f8a", marginTop: 3, fontFamily: "'Public Sans', sans-serif" }}>
+                  {sub}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
 
+        {/* Footer line */}
         <motion.p
-          initial="hidden" animate={anim} variants={fadeUp} custom={11}
-          style={{ marginTop: 28, fontSize: 19, fontWeight: 800, color: "#1a4a6a", textAlign: "center", padding: "0 16px" }}
+          initial="hidden" animate={anim} variants={fadeUp} custom={10}
+          style={{
+            marginTop: 32,
+            fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
+            fontWeight: 800,
+            color: "#1a4a6a",
+            textAlign: "center",
+            padding: "0 16px",
+            fontFamily: "'Public Sans', sans-serif",
+          }}
         >
           One Decision Engine. Every outcome measured, improved, compounding!
         </motion.p>

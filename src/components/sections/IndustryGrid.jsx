@@ -2,22 +2,25 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight, ChevronLeft, ChevronRight,
-  Shield, Landmark, Heart, BarChart2,
-  Zap, Radio, Truck, Globe,
+  Shield, Landmark, Heart, Factory, TrendingUp,
+  Zap, Radio, Truck, ShoppingCart, Cpu, PlayCircle, Car
 } from "lucide-react";
 
 const industries = [
-  { slug: "insurance", title: "Insurance", diUseCase: "Predict claims fraud before it happens", icon: Shield },
-  { slug: "banking", title: "Banking & Financial Services", diUseCase: "Real-time risk intelligence that prevents fraud before it happens", icon: Landmark },
-  { slug: "healthcare", title: "Healthcare", diUseCase: "Predict patient readmission risks", icon: Heart },
-  { slug: "manufacturing", title: "Manufacturing", diUseCase: "Predict equipment failure before it causes production downtime", icon: BarChart2 },
-  { slug: "energy", title: "Energy & Utilities", diUseCase: "Optimize energy distribution in real-time using AI demand forecasting", icon: Zap },
-  { slug: "telecom", title: "Telecom", diUseCase: "Predict and prevent customer churn before it impacts revenue", icon: Radio },
-  { slug: "logistics", title: "Logistics", diUseCase: "Optimize routes and predict delivery delays before they happen", icon: Truck },
-  { slug: "public-sector", title: "Public Sector", diUseCase: "Enhance citizen services with intelligent resource allocation", icon: Globe },
+  { slug: "insurance", title: "Insurance", diUseCase: "Detect and prevent claims fraud before it impacts payouts", icon: Shield },
+  { slug: "healthcare", title: "Healthcare", diUseCase: "Predict patient risks early to improve outcomes and readmissions", icon: Heart },
+  { slug: "energy", title: "Energy & Utilities", diUseCase: "Forecast demand accurately to optimize grid performance in real time", icon: Zap },
+  { slug: "automotive", title: "Automotive", diUseCase: "Predict vehicle and supply chain disruptions before they impact production", icon: Car },
+  { slug: "financial", title: "Financial Services", diUseCase: "Identify risk patterns early to protect transactions and ensure compliance", icon: TrendingUp },
+  { slug: "logistics", title: "Logistics and Chain Supply", diUseCase: "Anticipate disruptions and delays before they impact delivery timelines", icon: Truck },
+  { slug: "banking", title: "Banking", diUseCase: "Detect fraud in real time to prevent losses before they occur", icon: Landmark },
+  { slug: "manufacturing", title: "Manufacturing", diUseCase: "Predict equipment failure before it causes production downtime", icon: Factory },
+  { slug: "telecom", title: "Telecom", diUseCase: "Identify churn signals early to retain customers before revenue is lost", icon: Radio },
+  { slug: "retail-ecommerce", title: "Retail & E-commerce", diUseCase: "Forecast demand precisely to optimize inventory and prevent stockouts", icon: ShoppingCart },
+  { slug: "technology-saas", title: "Technology & SaaS", diUseCase: "Identify growth and churn signals early to maximize customer lifetime value.", icon: Cpu },
+  { slug: "media-entertainment", title: "Media & Entertainment", diUseCase: "Predict audience preferences to maximize content engagement.", icon: PlayCircle },
 ];
 
-// Responsive cards per page based on screen size
 function useCardsPerPage() {
   const [width, setWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1200
@@ -30,9 +33,9 @@ function useCardsPerPage() {
     return () => window.removeEventListener("resize", handler);
   });
 
-  if (width < 640) return 2;      // mobile: 2 cards (1 col × 2 rows)
-  if (width < 1024) return 4;     // tablet: 4 cards (2 col × 2 rows)
-  return 6;                        // desktop: 6 cards (3 col × 2 rows)
+  if (width < 640) return 2;
+  if (width < 1024) return 4;
+  return 6;
 }
 
 function useGridCols() {
@@ -82,7 +85,6 @@ export default function IndustryGrid() {
     setPage(clampedNext);
   };
 
-  // Reset page if it's out of bounds after resize
   useState(() => {
     if (page >= totalPages) setPage(0);
   });
@@ -105,7 +107,6 @@ export default function IndustryGrid() {
         boxSizing: "border-box",
       }}
     >
-      {/* Google Font */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap');
         * { box-sizing: border-box; }
@@ -187,7 +188,6 @@ export default function IndustryGrid() {
                 fontWeight: 800,
                 lineHeight: 1.15,
                 color: "#111827",
-                marginBottom: "20px",
                 margin: "0 0 20px 0",
               }}
               initial={{ opacity: 0, y: 16 }}
@@ -203,7 +203,6 @@ export default function IndustryGrid() {
                 fontSize: "15px",
                 color: "#4b5a6a",
                 lineHeight: 1.65,
-                marginBottom: "36px",
                 margin: "0 0 36px 0",
               }}
               initial={{ opacity: 0, y: 12 }}
@@ -256,6 +255,7 @@ export default function IndustryGrid() {
                 return (
                   <motion.div
                     key={industry.slug}
+                    onClick={() => window.location.href = `/industries/${industry.slug}`}
                     style={{
                       background: "white",
                       borderRadius: "16px",
@@ -295,7 +295,10 @@ export default function IndustryGrid() {
                       >
                         <Icon size={17} color="#5BA3D1" />
                       </div>
-                      <motion.span
+
+                      <motion.a
+                        href={`/industries/${industry.slug}`}
+                        onClick={(e) => e.stopPropagation()}
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
@@ -304,6 +307,7 @@ export default function IndustryGrid() {
                           fontWeight: 600,
                           color: "#5BA3D1",
                           opacity: 0.8,
+                          textDecoration: "none",
                         }}
                         whileHover={{ opacity: 1 }}
                       >
@@ -315,14 +319,14 @@ export default function IndustryGrid() {
                         >
                           <ArrowRight size={12} />
                         </motion.span>
-                      </motion.span>
+                      </motion.a>
                     </div>
 
                     {/* Body */}
                     <div style={{ marginTop: "16px" }}>
                       <div
                         style={{
-                          fontSize:"16px",
+                          fontSize: "16px",
                           fontWeight: 700,
                           color: "#111827",
                           marginBottom: "6px",
@@ -390,7 +394,7 @@ export default function IndustryGrid() {
                   }}
                   animate={{
                     width: i === page ? 28 : 16,
-                    backgroundColor: i === page ? "#5BA3D1" : "rgba(255,255,255,0.5)",
+                    backgroundColor: i === page ? "#5BA3D1" : "rgba(91,163,209,0.3)",
                   }}
                   transition={{ duration: 0.3 }}
                   onClick={() => goTo(i)}
@@ -421,7 +425,6 @@ export default function IndustryGrid() {
             </motion.button>
           </div>
         </div>
-
       </div>
     </section>
   );

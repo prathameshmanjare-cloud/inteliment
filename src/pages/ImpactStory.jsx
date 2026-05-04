@@ -96,7 +96,7 @@ function ResultsBar({ results }) {
   return (
     <section
       ref={ref}
-      className="relative py-10 sm:py-14 lg:py-16 overflow-hidden"
+      className="relative py-10 sm:py-14 lg:py-14 overflow-hidden"
       style={{ backgroundColor: '#1F1F1F' }}
     >
       <img
@@ -105,7 +105,7 @@ function ResultsBar({ results }) {
         className="absolute top-0 right-0 h-full w-auto object-cover opacity-40 pointer-events-none"
       />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-12 my-4 sm:my-8 lg:my-10 grid grid-cols-2 md:grid-cols-4 gap-y-6">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-10 my-4 sm:my-8 lg:my-10 grid grid-cols-2 md:grid-cols-4 gap-y-6">
         {results.map((r, i) => (
           <div
             key={`${r.label}-${i}`}
@@ -117,7 +117,7 @@ function ResultsBar({ results }) {
             }}
           >
             <div
-              className="font-black text-[2.2rem] sm:text-[2.8rem] lg:text-[3.2rem] leading-none mb-2 sm:mb-3"
+              className="font-black text-[2rem] sm:text-[2.5rem] lg:text-[2.8rem] leading-none mb-2 sm:mb-3"
               style={{
                 fontFamily: "'Public Sans', sans-serif",
                 color: '#60b8e0',
@@ -126,7 +126,7 @@ function ResultsBar({ results }) {
               {r.value}
             </div>
             <p
-              className="text-[11px] sm:text-[13px] text-white/60 font-medium tracking-wide"
+              className="text-[11px] sm:text-[14px] text-white/60 font-medium tracking-wide"
               style={{ fontFamily: "'Public Sans', sans-serif" }}
             >
               {r.label}

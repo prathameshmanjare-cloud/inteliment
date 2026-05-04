@@ -4,7 +4,6 @@ import { Shield, Heart, Zap, BarChart2, FileText, ArrowRight, ChevronLeft, Chevr
 import SEOHead from '@/components/ui/SEOHead'
 import { buildPageMeta } from '@/utils/seo'
 import { impactStories } from '@/data/impactStories'
-import { blogs } from '@/data/blogs'
 import imBg from '@/assets/impact/impall-hero.svg'
 
 function TrophyIcon() {
@@ -20,16 +19,14 @@ function TrophyIcon() {
   )
 }
 
-const ALL_INDUSTRIES = [...new Set([...impactStories.map(s => s.industry), ...blogs.map(b => b.industry)])]
+const ALL_INDUSTRIES = [...new Set(impactStories.map(s => s.industry))]
 const CATEGORY_COUNTS = ALL_INDUSTRIES.reduce((acc, ind) => {
-  const storyCount = impactStories.filter(s => s.industry === ind).length
-  const blogCount = blogs.filter(b => b.industry === ind).length
-  acc[ind] = storyCount + blogCount
+  acc[ind] = impactStories.filter(s => s.industry === ind).length
   return acc
 }, {})
 
 const CATEGORIES = [
-  'Telecom', 'Blogs', 'Insurance', 'Infrastructure', 'Healthcare',
+  'Telecom', 'Blogs','Insurance', 'Infrastructure', 'Healthcare',
   'White Papers', 'Automation', 'Logistics & Supply Chain',
   'Technology & SaaS', 'Financial Services', 'Retail & E-Commerce',
   'Energy & Utilities', 'Media & Entertainment',
@@ -79,13 +76,8 @@ export default function ImpactStoryAll() {
   }
 
   const filteredContent = useMemo(() => {
-    const allContent = [
-      ...impactStories.map(s => ({ ...s, type: 'story' })),
-      ...blogs.map(b => ({ ...b, type: 'blog' })),
-    ]
-    // When no filter is active, show only blogs
-    if (!activeFilters.length) return blogs.map(b => ({ ...b, type: 'blog' }))
-    // When filters are active, show items matching selected categories
+    const allContent = impactStories.map(s => ({ ...s, type: 'story' }))
+    if (!activeFilters.length) return allContent
     return allContent.filter(item => activeFilters.includes(item.industry))
   }, [activeFilters])
 
@@ -130,7 +122,7 @@ export default function ImpactStoryAll() {
             style={{ fontSize: 'clamp(13px, 1.5vw, 15px)', color: 'rgba(255,255,255,0.8)', maxWidth: '500px' }}
           >
             Deep dives. Industry breakthroughs. Expert insights. Explore our complete library
-            of case studies and blogs to see how we solve the world's toughest data challenges.
+            of case studies to see how we solve the world's toughest data challenges.
           </p>
         </div>
       </section>
@@ -189,7 +181,7 @@ export default function ImpactStoryAll() {
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4">
             {visibleContent.map((item, index) => {
               const Icon = INDUSTRY_MAP[item.industry] || FileText
-              const linkPath = item.type === 'story' ? `/impact/${item.slug}` : `/blogs/${item.slug}`
+              const linkPath = `/impact/${item.slug}`
               return (
                 <Link
                   key={`${safePage}-${index}`}
@@ -214,25 +206,12 @@ export default function ImpactStoryAll() {
                         <Icon size={14} />
                         {item.industry}
                       </span>
-                      {item.type === 'blog' ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ color: '#5BA3D1', opacity: 0.55 }} aria-hidden="true">
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                          <polyline points="14,2 14,8 20,8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      ) : (
-                        <TrophyIcon />
-                      )}
+                      <TrophyIcon />
                     </div>
 
                     <h3 className="font-['Public_Sans'] font-bold text-[16px] leading-snug mb-2 text-[#0D1B2A]">
                       {item.title}
                     </h3>
-
-                    {item.type === 'blog' && (
-                      <p className="font-['Public_Sans'] text-[11px] mb-2" style={{ color: '#5BA3D1' }}>
-                        {item.date}
-                      </p>
-                    )}
 
                     <p className="font-['Public_Sans'] text-[14px] leading-relaxed text-[#4a6478] flex-1 line-clamp-3">
                       {item.subtitle}

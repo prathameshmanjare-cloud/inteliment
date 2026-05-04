@@ -56,16 +56,16 @@ const aiProducts = [
 
 const decisionLayers = [
   {
-    icon: 'Zap',
-    label: 'Operational',
-    sublabel: 'Real-time, high-volume',
-    description: 'Automate repetitive decisions at scale, fraud flags, pricing updates, routing logic.',
-  },
-  {
     icon: 'Target',
     label: 'Tactical',
     sublabel: 'Weekly, campaign-level',
     description: 'Optimise campaigns, resource allocation, and demand forecasting.',
+  },
+  {
+    icon: 'Zap',
+    label: 'Operational',
+    sublabel: 'Real-time, high-volume',
+    description: 'Automate repetitive decisions at scale, fraud flags, pricing updates, routing logic.',
   },
   {
     icon: 'TrendingUp',
@@ -358,7 +358,6 @@ function HeroSectionCustom() {
   )
 }
 /* ─── Product Card ──────────────────────────────────────────────────────── */
-
 function ProductCard({ product, index }) {
   const Icon = Icons[product.icon] || Icons.Brain
   const ref = useRef(null)
@@ -400,7 +399,6 @@ function ProductCard({ product, index }) {
             {product.badge}
           </span>
         </div>
-
         {/* Title + subtitle */}
         <h3
           className="font-bold text-xl mb-1"

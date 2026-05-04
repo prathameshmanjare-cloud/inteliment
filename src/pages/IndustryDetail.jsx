@@ -10,6 +10,9 @@ import CTABanner from '@/components/sections/CTABanner'
 import Container from '@/components/ui/Container'
 import { buildPageMeta, breadcrumbJsonLd } from '@/utils/seo'
 import { industries } from '@/data/industries'
+import blbg from '/images/industries/blogs-bg.svg'
+import podcbg from '/images/industries/podcast-bg.svg'
+import webbg from '/images/industries/webinar-bg.svg'
 
 const diLayerIcons = {
   Data: Icons.Database,
@@ -140,7 +143,6 @@ export default function IndustryDetail() {
           ref={heroRef}
           className="relative overflow-hidden mt-16 min-h-[420px] sm:min-h-[520px] lg:min-h-[calc(100vh-4rem)]"
         >
-          {/* parallax image with scale */}
           <motion.img
             src={industry.bannerImage}
             alt={`${industry.title}, Inteliment Decision Intelligence`}
@@ -150,16 +152,12 @@ export default function IndustryDetail() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
           />
-
-          {/* gradient overlay — animated wipe */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-navy/40 lg:from-navy/80 lg:via-navy/50 lg:to-transparent"
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
           />
-
-          {/* shimmer line sweep */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -169,16 +167,12 @@ export default function IndustryDetail() {
             animate={{ x: '200%' }}
             transition={{ duration: 1.8, delay: 0.6, ease: 'easeInOut' }}
           />
-
-          {/* content */}
           <motion.div
             className="absolute inset-0 flex items-center"
             style={{ opacity: heroOpacity }}
           >
             <div className="w-full px-4 sm:px-6 lg:pl-28 lg:pr-0">
               <div className="max-w-xl lg:max-w-2xl">
-
-                {/* eyebrow badge */}
                 <motion.span
                   className="inline-block px-4 py-1.5 glass rounded-full text-xs sm:text-sm font-display font-semibold text-teal border border-teal/20 mb-4 sm:mb-5"
                   initial={{ opacity: 0, y: -30, scale: 0.85 }}
@@ -187,8 +181,6 @@ export default function IndustryDetail() {
                 >
                   {industry.title}
                 </motion.span>
-
-                {/* headline — word by word */}
                 <motion.h1
                   className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white leading-tight mb-3 sm:mb-4"
                   initial="hidden"
@@ -211,8 +203,6 @@ export default function IndustryDetail() {
                     </motion.span>
                   ))}
                 </motion.h1>
-
-                {/* subheadline */}
                 <motion.p
                   className="text-white/75 font-body text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 max-w-xl"
                   initial={{ opacity: 0, y: 25, filter: 'blur(6px)' }}
@@ -221,8 +211,6 @@ export default function IndustryDetail() {
                 >
                   {industry.subheadline}
                 </motion.p>
-
-                {/* CTAs */}
                 <motion.div
                   className="flex flex-row flex-wrap gap-3"
                   initial={{ opacity: 0, y: 30 }}
@@ -246,7 +234,6 @@ export default function IndustryDetail() {
                     </Button>
                   </motion.div>
                 </motion.div>
-
               </div>
             </div>
           </motion.div>
@@ -272,7 +259,7 @@ export default function IndustryDetail() {
             viewport={{ once: true, margin: '-60px' }}
             variants={staggerContainer}
           >
-            <motion.div/>
+            <motion.div />
             <motion.h2
               className="font-display font-bold text-display-lg text-navy mb-4"
               variants={blurIn}
@@ -296,7 +283,6 @@ export default function IndustryDetail() {
         className="relative w-full overflow-hidden"
         style={{ backgroundColor: '#0f1c2e' }}
       >
-        {/* SVG pattern */}
         <motion.img
           src="/images/industries/fs-banner.svg"
           alt=""
@@ -307,8 +293,6 @@ export default function IndustryDetail() {
           viewport={{ once: true }}
           transition={{ duration: 1.4 }}
         />
-
-        {/* floating glow orbs */}
         <motion.div
           className="absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full pointer-events-none"
           style={{
@@ -327,7 +311,6 @@ export default function IndustryDetail() {
           animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.8, 0.3], x: [0, -20, 0], y: [0, 20, 0] }}
           transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         />
-        {/* extra orb */}
         <motion.div
           className="absolute top-1/2 left-1/2 w-32 h-32 rounded-full pointer-events-none"
           style={{
@@ -339,9 +322,7 @@ export default function IndustryDetail() {
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         />
 
-        {/* Content row */}
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-stretch lg:ml-10">
-
           {/* LEFT — DI Approach */}
           <motion.div
             className="w-full lg:w-[60%] py-10 sm:py-14 px-4 sm:px-8 lg:px-14 flex flex-col justify-start"
@@ -350,7 +331,6 @@ export default function IndustryDetail() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
           >
-            {/* Eyebrow */}
             <motion.span
               className="inline-block text-[12px] sm:text-[13px] font-semibold text-white/80 border border-white/20 rounded-full px-4 py-1.5 mb-5 sm:mb-6 w-fit"
               style={{ fontFamily: "'Public Sans', sans-serif" }}
@@ -361,8 +341,6 @@ export default function IndustryDetail() {
             >
               Our DI Approach
             </motion.span>
-
-            {/* Heading */}
             <motion.h2
               className="font-bold text-white text-2xl sm:text-3xl lg:text-[2.25rem] leading-tight mb-4 sm:mb-5"
               style={{ fontFamily: "'Public Sans', sans-serif" }}
@@ -373,8 +351,6 @@ export default function IndustryDetail() {
             >
               How the Four Layers Apply
             </motion.h2>
-
-            {/* Body */}
             <motion.p
               className="text-white/65 text-[14px] sm:text-[15px] leading-relaxed mb-8 sm:mb-10 max-w-[560px]"
               style={{ fontFamily: "'Public Sans', sans-serif" }}
@@ -385,8 +361,6 @@ export default function IndustryDetail() {
             >
               {industry.approach}
             </motion.p>
-
-            {/* Four layer cards */}
             <motion.div
               className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:items-stretch lg:flex-nowrap gap-3 lg:gap-0"
               variants={staggerContainer}
@@ -397,7 +371,6 @@ export default function IndustryDetail() {
               {industry.diLayers.map((layer, idx) => {
                 const LayerIcon = diLayerIcons[layer.layer] || Icons.Circle
                 const isLast = idx === industry.diLayers.length - 1
-
                 return (
                   <div key={layer.layer} className="flex items-center lg:flex-1 lg:min-w-0">
                     <motion.div
@@ -422,21 +395,18 @@ export default function IndustryDetail() {
                         transition: { duration: 0.3 },
                       }}
                     >
-                      {/* Icon — NO animation */}
                       <div
                         className="w-11 sm:w-12 h-11 sm:h-12 rounded-lg flex items-center justify-center mt-1 shrink-0"
                         style={{ backgroundColor: 'rgba(81,142,181,0.15)' }}
                       >
                         <LayerIcon size={24} style={{ color: '#518EB5' }} />
                       </div>
-
                       <p
-                        className="text-[13px] sm:text-[15px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.18em] text-white"
+                        className="text-[13px] sm:text-[15px] font-bold text-white"
                         style={{ fontFamily: "'Public Sans', sans-serif" }}
                       >
                         {layer.layer}
                       </p>
-
                       <p
                         className="text-[12px] sm:text-[14px] text-white/50 leading-snug"
                         style={{ fontFamily: "'Public Sans', sans-serif" }}
@@ -444,8 +414,6 @@ export default function IndustryDetail() {
                         {layer.description}
                       </p>
                     </motion.div>
-
-                    {/* Arrow — desktop only, no animation on icon */}
                     {!isLast && (
                       <motion.div
                         className="hidden lg:flex shrink-0 px-1 sm:px-3 items-center self-center"
@@ -486,8 +454,6 @@ export default function IndustryDetail() {
             >
               Use Cases
             </motion.h3>
-
-            {/* Use case rows */}
             <motion.div
               className="space-y-2 sm:space-y-3 mb-8 sm:mb-10"
               variants={staggerContainer}
@@ -498,7 +464,7 @@ export default function IndustryDetail() {
               {industry.useCases.map((uc, i) => (
                 <motion.div
                   key={uc}
-                  className="rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-[14px] sm:text-[14px] text-[#FFFFFF] leading-snug cursor-default"
+                  className="rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 text-[14px] text-[#FFFFFF] leading-snug cursor-default"
                   style={{
                     fontFamily: "'Public Sans', sans-serif",
                     backgroundColor: 'rgba(255,255,255,0.12)',
@@ -523,8 +489,6 @@ export default function IndustryDetail() {
                 </motion.div>
               ))}
             </motion.div>
-
-            {/* Technology Stack */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -578,23 +542,19 @@ export default function IndustryDetail() {
               </motion.div>
             </motion.div>
           </motion.div>
-
         </div>
       </section>
 
       {/* ══════════════ IMPACT METRICS ══════════════ */}
       <section className="py-12 sm:py-16 bg-[#dce8f0] overflow-hidden">
         <Container>
-          {/* Section label */}
           <motion.div
             className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-          </motion.div>
-
+          />
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 px-2 sm:px-4"
             variants={staggerContainer}
@@ -645,7 +605,6 @@ export default function IndustryDetail() {
                 >
                   {m.value}
                 </motion.div>
-
                 <motion.p
                   className="text-xs sm:text-sm font-semibold text-[#1a3a5c]"
                   style={{ fontFamily: "'Public Sans', sans-serif" }}
@@ -661,6 +620,298 @@ export default function IndustryDetail() {
           </motion.div>
         </Container>
       </section>
+
+      {/* ══════════════ CONNECT WITH US MORE ══════════════ */}
+      {/* ══════════════ CONNECT WITH US MORE ══════════════ */}
+<section
+  style={{
+    background: "linear-gradient(to bottom, #ffffff 0%, #B0D3E9 100%)",
+    fontFamily: "'Public Sans', sans-serif",
+    padding: "clamp(48px, 7vw, 96px) clamp(16px, 5vw, 48px)",
+  }}
+>
+  {/* Section Header */}
+  <motion.div
+    variants={fadeUp}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true }}
+    style={{ textAlign: "center", marginBottom: "48px" }}
+  >
+    <motion.span
+      variants={fadeUp}
+      style={{
+        display: "inline-block",
+        border: "1px solid rgba(91,163,209,0.45)",
+        borderRadius: "999px",
+        padding: "5px 18px",
+        fontSize: "13px",
+        fontWeight: 600,
+        color: "#2a6fa8",
+        background: "rgba(255,255,255,0.6)",
+        marginBottom: "16px",
+        letterSpacing: "0.02em",
+      }}
+    >
+      Connect with us more
+    </motion.span>
+
+    <h2
+      style={{
+        fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)",
+        fontWeight: 800,
+        color: "#111827",
+        lineHeight: 1.2,
+        margin: "0 0 12px 0",
+      }}
+    >
+      Data-Driven Excellence
+    </h2>
+
+    <p style={{ fontSize: "15px", color: "#4b5a6a", margin: 0 }}>
+      Ready to Drive Your Success? Let's Talk!
+    </p>
+  </motion.div>
+
+  {/* Outer Grid: Blog (left) + Podcast/Webinar (right) */}
+  <div
+    style={{
+      maxWidth: "1200px",
+      margin: "0 auto",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+      gap: "20px",
+      alignItems: "stretch",
+    }}
+  >
+    {/* ── LEFT: Blog Card ── */}
+    <motion.div
+      variants={fadeLeft}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      whileHover={{
+        y: -8,
+        boxShadow: "0 20px 48px rgba(91,163,209,0.18)",
+        transition: { duration: 0.25, ease: "easeOut" },
+      }}
+      style={{
+        background: "white",
+        borderRadius: "16px",
+        border: "1px solid rgba(91,163,209,0.30)",
+        overflow: "hidden",
+        display: "flex",
+        cursor: "pointer",
+        minHeight: "280px",
+      }}
+    >
+      {/* Content — 60% */}
+      <div
+        style={{
+          flex: "0 0 60%",
+          padding: "28px 24px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <span
+            style={{
+              display: "inline-block",
+              border: "1px solid rgba(91,163,209,0.5)",
+              borderRadius: "999px",
+              padding: "3px 14px",
+              fontSize: "12px",
+              fontWeight: 600,
+              color: "#2a6fa8",
+              background: "rgba(91,163,209,0.08)",
+              marginBottom: "16px",
+            }}
+          >
+            Blogs
+          </span>
+
+          <h3
+            style={{
+              fontSize: "clamp(1rem, 2vw, 1.2rem)",
+              fontWeight: 800,
+              color: "#111827",
+              lineHeight: 1.3,
+              margin: "0 0 12px 0",
+            }}
+          >
+            The Future of Data Science Trends and Predictions
+          </h3>
+
+          <p
+            style={{
+              fontSize: "13px",
+              color: "#4b5a6a",
+              lineHeight: 1.65,
+              margin: "0 0 20px 0",
+            }}
+          >
+            Today, we live in a world where digital experiences are in the driving seat for nearly every aspect of our lives.
+          </p>
+        </div>
+
+        
+         <a href="/insights"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            fontSize: "14px",
+            fontWeight: 700,
+            color: "#2a6fa8",
+            textDecoration: "none",
+          }}
+        >
+          View All Industries
+          <span style={{ fontSize: "18px", lineHeight: 1 }}>→</span>
+        </a>
+      </div>
+
+      {/* Image — 40% */}
+      <div
+        style={{
+          flex: "0 0 40%",
+          backgroundImage: `url(${blbg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+    </motion.div>
+
+    {/* ── RIGHT: Podcast + Webinar 50/50 ── */}
+    <motion.div
+      variants={fadeRight}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "20px",
+        alignItems: "stretch",
+      }}
+    >
+      {[
+        { tag: "Podcast", bg: podcbg },
+        { tag: "Webinar", bg: webbg },
+      ].map(({ tag, bg }) => (
+        <motion.div
+          key={tag}
+          whileHover={{
+            y: -8,
+            boxShadow: "0 20px 48px rgba(91,163,209,0.18)",
+            transition: { duration: 0.25, ease: "easeOut" },
+          }}
+          style={{
+            background: "white",
+            borderRadius: "16px",
+            border: "1px solid rgba(91,163,209,0.25)",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+            cursor: "pointer",
+            minHeight: "280px",
+          }}
+        >
+          {/* Row 1 — Image */}
+          <div
+            style={{
+              height: "140px",
+              flexShrink: 0,
+              background: "linear-gradient(135deg, #deedf7 0%, #eaf4fb 100%)",
+              backgroundImage: `url(${bg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+
+          {/* Row 2 — Label */}
+          <div style={{ padding: "14px 18px 0 18px" }}>
+            <span
+              style={{
+                display: "inline-block",
+                border: "1px solid rgba(91,163,209,0.45)",
+                borderRadius: "999px",
+                padding: "4px 14px",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "#2a6fa8",
+                background: "rgba(91,163,209,0.07)",
+              }}
+            >
+              {tag}
+            </span>
+          </div>
+
+          {/* Row 3 — Title */}
+          <div style={{ padding: "8px 18px 0 18px" }}>
+            <h3
+              style={{
+                fontSize: "15px",
+                fontWeight: 800,
+                color: "#0f1c2e",
+                lineHeight: 1.3,
+                margin: 0,
+              }}
+            >
+              Operational Analytics Automotive
+            </h3>
+          </div>
+
+          {/* Row 4 — Description */}
+          <div style={{ padding: "6px 18px 0 18px", flex: 1 }}>
+            <p
+              style={{
+                fontSize: "13px",
+                color: "#4b5a6a",
+                lineHeight: 1.6,
+                margin: 0,
+              }}
+            >
+              Our customer, one of India's leading automotive companies, was looking at innovating for growth....
+            </p>
+          </div>
+
+          {/* Row 5 — Bottom-right arrow button */}
+          <div
+            style={{
+              padding: "12px 18px 16px 18px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <div
+              style={{
+                width: "36px",
+                height: "36px",
+                borderRadius: "50%",
+                border: "1px solid rgba(91,163,209,0.35)",
+                background: "rgba(255,255,255,0.85)",
+                backdropFilter: "blur(4px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 2px 8px rgba(91,163,209,0.15)",
+              }}
+            >
+              <span style={{ fontSize: "16px", color: "#2a6fa8", lineHeight: 1, marginLeft: "2px" }}>
+                <ArrowRight size={18} />
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</section>
     </>
   )
 }

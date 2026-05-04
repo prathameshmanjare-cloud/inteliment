@@ -10,9 +10,6 @@ import {
   Contact, Privacy, Terms, CookiePolicy,
   Australia, InteliLabs, Leadership, InteliAI, NotFound, ImpactStoryAll
 } from '@/routes'
-import Blogs from '@/pages/Blogs'
-import BlogStory from '@/pages/BlogStory'
-
 function PageSkeleton() {
   return (
     <div className="min-h-screen bg-navy flex items-center justify-center">
@@ -58,8 +55,6 @@ function AnimatedRoutes() {
           <Route path="/impact" element={<Impact />} />
           <Route path="/impact/:slug" element={<ImpactStory />} />
           <Route path="/impact/all" element={<ImpactStoryAll />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:slug" element={<BlogStory />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/insights/:slug" element={<InsightArticle />} />
           <Route path="/assessment" element={<Assessment />} />
