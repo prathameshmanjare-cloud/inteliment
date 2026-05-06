@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import * as Icons from 'lucide-react'
@@ -9,7 +10,6 @@ import Container from '@/components/ui/Container'
 import SectionHeading from '@/components/ui/SectionHeading'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import GlassCard from '@/components/ui/GlassCard'
-import GradientDivider from '@/components/ui/GradientDivider'
 import { buildPageMeta, organizationJsonLd } from '@/utils/seo'
 import { companyMilestones } from '@/data/team'
 import {
@@ -18,6 +18,33 @@ import {
   visionMissionValues,
   aboutAwards,
 } from '@/data/leadership'
+import { color } from 'framer-motion'
+
+
+function CountUp({ end, suffix = '', duration = 1500 }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      const steps = 40
+      const increment = end / steps
+      const interval = duration / steps
+      let current = 0
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= end) { setCount(end); clearInterval(timer) }
+        else setCount(Math.floor(current))
+      }, interval)
+    }, { threshold: 0.3 })
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [end, duration])
+
+  return <span ref={ref}>{count}{suffix}</span>
+}
 
 // ── Inline social icon SVGs ─────────────────────────────────────────
 function LinkedInIcon({ size = 14 }) {
@@ -97,44 +124,54 @@ const offices = [
 
 const ringColors = ['border-teal', 'border-mint/60', 'border-orange-400', 'border-blue-400', 'border-violet-400']
 
-// ── VMV card data built from data file ─────────────────────────────
-const vmvCards = (vmv) => [vmv.vision, vmv.mission, vmv.values]
-
 export default function About() {
+
+  const leadershipImages = {
+    'Trupti Pansare':   'tp.svg',
+    'Niranjan Dikshit': 'nd.svg',
+    'Gauri Bapat':      'gb.svg',
+    'Nimesh Shah':      'ns.svg',
+    'Ashil Shah':       'as.svg',
+    'Swanand Kulkarni': 'sk.svg',
+  }
+
   const meta = buildPageMeta(
     'About Inteliment',
     '22 years of data engineering excellence. Inteliment is a Decision Intelligence company headquartered in Pune with offices in Sydney, Singapore, and Europe.',
     '/about'
   )
+
   return (
     <>
       <SEOHead meta={meta} jsonLd={organizationJsonLd()} />
 
-      {/* S1, Hero */}
+      {/* ── S1 Hero ─────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden mt-16 min-h-[420px] sm:min-h-[500px] lg:min-h-[calc(100vh-4rem)]">
         <img
-          src="/images/about/about-banner.png"
+          src="/images/about/about-banner.svg"
           alt="About Inteliment, Decision Intelligence"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        {/* Dark gradient, stronger on mobile for legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/70 to-navy/40 lg:from-navy/80 lg:via-navy/50 lg:to-transparent" />
 
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full pl-5 pr-5 sm:pl-10 sm:pr-10 lg:pl-16 lg:pr-0">
-            <div className="max-w-xl lg:max-w-2xl">
-              <span className="inline-block px-4 py-1.5 glass rounded-full text-sm font-display font-semibold text-teal border border-teal/20 mb-5">
+          <div className="w-full px-6 sm:px-9 lg:px-28">
+            <div className="max-w-xl lg:max-w-[520px]">
+              {/* Hero eyebrow intentionally uses brand palette — lives on the banner image */}
+              <span className="inline-block px-5 py-2 rounded-full text-sm font-display font-semibold text-[#3A7394] border border-[#5BA3D1] mb-5 bg-[#DFEFF8]">
                 About Inteliment
               </span>
-              <h1 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white leading-tight mb-4">
-                22 Years of Building Systems That Make Enterprises Smarter.
+              <h1 className="font-display font-bold text-2xl sm:text-4xl lg:text-4xl xl:text-5xl text-navy leading-tight mb-5 text-nowrap">
+                22 Years of Building Systems <br/>That Make Enterprises Smarter.
               </h1>
-              <p className="text-white/75 font-body text-base lg:text-lg leading-relaxed mb-8 max-w-xl">
-                We started as a business intelligence consultancy in Pune. We grew through every wave of the data industry, BI, cloud, big data, machine learning, AI. What stayed constant was the mission: help enterprises make better decisions, faster.
+              <p className="text-navy/60 font-body text-base lg:text-lg leading-relaxed mb-8 max-w-lg">
+                Most AI projects stall between proof-of-concept and production. Inteliment has spent 22 years learning what it takes to go the other way, building AI systems that work in the real world, at enterprise scale.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                <Button to="/contact" size="md" icon={ArrowRight} className="rounded-full">
-                  Partner With Us
+                <Button to="/inteli-ai" size="md" icon={ArrowRight} className="rounded-lg bg-[#3a8bbf] hover:bg-[#2e75a3] border-0">
+                  Explore Inteli-AI
+                </Button>
+                <Button to="/contact" size="md" variant="outline" className="rounded-lg border-navy/30 text-navy hover:bg-navy/5">
+                  Talk to a Specialist
                 </Button>
               </div>
             </div>
@@ -142,137 +179,212 @@ export default function About() {
         </div>
       </section>
 
-      {/* S2, Vision, Mission, Values */}
-      <section className="py-20 bg-surface section-light">
+      {/* ── S2 Vision, Mission, Values ──────────────────────────────── */}
+      <section className="py-20" style={{ background: 'linear-gradient(135deg, #0f1923 0%, #1a2530 50%, #0d1820 100%)' }}>
         <Container>
           <ScrollReveal>
             <SectionHeading
               eyebrow="Purpose"
-              title={visionMissionValues.sectionHeading}
-              light
+              title="What Drives Us. What Defines Us."
             />
           </ScrollReveal>
 
-          {/* 3 VMV cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            {vmvCards(visionMissionValues).map((card, i) => {
-              const CardIcon = Icons[card.icon] || Icons.Star
-              return (
-                <ScrollReveal key={card.title} delay={i * 0.08}>
-                  <div
-                    className="rounded-2xl p-7 h-full border border-grey-200/80 hover:-translate-y-1 transition-all duration-300"
-                    style={{ backgroundColor: card.bg }}
-                  >
-                    <div className="w-11 h-11 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: `${card.accent}20` }}>
-                      <CardIcon size={22} style={{ color: card.accent }} />
-                    </div>
-                    <h3 className="font-display font-bold text-navy text-xl mb-3">{card.title}</h3>
-                    <p className="text-sm text-grey-700 font-body leading-relaxed">{card.description}</p>
-                  </div>
-                </ScrollReveal>
-              )
-            })}
-          </div>
+          <ScrollReveal delay={0.1}>
+            <div className="mt-12 rounded-2xl border border-white/10 overflow-hidden"
+              style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <div className="grid grid-cols-1 md:grid-cols-3">
 
+                {/* Row 1 */}
+                <div className="flex flex-col items-center justify-center gap-3 p-10 border-b border-r border-white/10 text-center">
+                  <img src="/images/about/vision.svg" alt="Vision" className="w-10 h-10" />
+                  <h3 className="font-display font-bold text-teal text-2xl">Vision</h3>
+                </div>
+
+                <div className="flex items-center justify-center p-10 border-b border-r border-white/10 text-center">
+                  <p className="text-white/70 font-body text-base leading-relaxed">
+                    {visionMissionValues.mission.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center justify-center gap-3 p-10 border-b border-white/10 text-center">
+                  <img src="/images/about/values.svg" alt="Values" className="w-10 h-10" />
+                  <h3 className="font-display font-bold text-teal text-2xl">Values</h3>
+                </div>
+
+                {/* Row 2 */}
+                <div className="flex items-center justify-center p-10 border-r border-white/10 text-center">
+                  <p className="text-white/70 font-body text-base leading-relaxed">
+                    {visionMissionValues.vision.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center justify-center gap-3 p-10 border-r border-white/10 text-center">
+                  <img src="/images/about/mission.svg" alt="Mission" className="w-10 h-10" />
+                  <h3 className="font-display font-bold text-teal text-2xl">Mission</h3>
+                </div>
+
+                <div className="flex items-center justify-center p-10 text-center">
+                  <p className="text-white/70 font-body text-base leading-relaxed">
+                    {visionMissionValues.values.description}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </ScrollReveal>
         </Container>
       </section>
 
-      <GradientDivider />
+      {/* ── S4 Meet the Founders & Leadership ───────────────────────── */}
+      <section className="py-20 relative overflow-hidden" style={{ background: '#f0f6fb' }}>
 
-      {/* S4, Meet the Founders & Leadership */}
-      <section className="py-20" style={{ background: '#1E252A' }}>
+        <img
+          src="/images/about/people-banner.svg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        />
 
-        {/* Section heading, constrained to page content width */}
-        <Container>
+        <Container className="relative z-10">
+
           <ScrollReveal>
-            <SectionHeading eyebrow="The People" title="Meet the Founders" />
+            <SectionHeading eyebrow="The People" title="Meet the Founders" light />
           </ScrollReveal>
-        </Container>
 
-        {/* Founders image, full section width, matching section borders */}
-        <div className="relative mt-10">
+          {/* Founders Cards */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-6xl mx-auto items-stretch">
+  {founders.map((founder, i) => (
+    <ScrollReveal key={founder.name} delay={i * 0.1}>
+      <div
+        className="flex rounded-2xl overflow-hidden border border-[#C7E0F0] shadow-lg h-full"
+        style={{
+          background: 'linear-gradient(135deg, #C7E0F0 0%, #ffffff 60%)',
+        }}
+      >
+        {/* Left: Founder Image */}
+        <div className="w-[200px] flex-shrink-0 self-stretch">
           <img
-            src="/images/about/founders.png"
-            alt="Dr. Prashant Pansare and Anand Pansare, Inteliment Founders"
-            className="w-full h-auto block"
+            src={`/images/about/${i === 0 ? 'pp.svg' : 'ap.svg'}`}
+            alt={founder.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              display: 'block',
+            }}
           />
-
-          {/* Left, Dr. Prashant Pansare */}
-          {/* Increased left to 12% and added max-w-xs to stop it from growing too wide */}
-          <div className="hidden lg:block absolute left-[12%] top-1/2 -translate-y-1/2 w-[22%] max-w-[320px]">
-            <h3 className="font-display font-bold text-white text-xl mb-1">
-              Dr. Prashant Pansare
-            </h3>
-            <p className="text-teal text-sm font-body font-semibold mb-3">
-              Founder &amp; Group CEO
-            </p>
-            <p className="text-white/70 font-body text-sm xl:text-base leading-relaxed">
-              {founders[0].bio}
-            </p>
-            <FounderSocialLinks founder={founders[0]} align="left" />
-          </div>
-
-          {/* Right, Anand Pansare */}
-          {/* Increased right to 12% and matched the max-width constraint */}
-          <div className="hidden lg:block absolute right-[12%] top-1/2 -translate-y-1/2 w-[22%] max-w-[320px] text-right">
-            <h3 className="font-display font-bold text-white text-xl mb-1">
-              Anand Pansare
-            </h3>
-            <p className="text-teal text-sm font-body font-semibold mb-3">
-              Co-Founder &amp; CEO Australia
-            </p>
-            <p className="text-white/70 font-body text-sm xl:text-base leading-relaxed">
-              {founders[1].bio}
-            </p>
-            <div className="flex justify-end">
-              <FounderSocialLinks founder={founders[1]} align="right" />
-            </div>
-          </div>
         </div>
 
-        {/* Mobile text, bios below image on small screens */}
-        <Container>
-          <div className="lg:hidden mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {founders.map((founder) => (
-              <div key={founder.name} className="glass rounded-xl p-6">
-                <h3 className="font-display font-bold text-white text-lg mb-1">
-                  {founder.name}
-                </h3>
-                <p className="text-teal text-sm font-body font-semibold mb-3">
-                  {founder.title}
-                </p>
-                <p className="text-white/70 font-body text-sm leading-relaxed">
-                  {founder.bio}
-                </p>
-                <FounderSocialLinks founder={founder} align="left" />
-              </div>
-            ))}
+        {/* Right: Text Content */}
+        <div className="p-5 flex flex-col justify-center">
+          <h3 className="font-display font-bold text-navy text-lg mb-0.5">
+            {founder.name}
+          </h3>
+          <p className="text-xs font-body text-grey-500 mb-3">{founder.title}</p>
+          <p className="text-xs text-grey-700 font-body leading-relaxed mb-4">
+            {founder.bio}
+          </p>
+
+          {/* Social Icons */}
+          <div className="flex gap-2">
+            {founder.twitter && (
+              
+               <a href={founder.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-[#C7E0F0] flex items-center justify-center text-grey-500 hover:text-navy hover:border-navy transition-colors bg-white/70"
+              >
+                <TwitterIcon size={13} />
+              </a>
+            )}
+            {founder.linkedIn && (
+              
+                <a href={founder.linkedIn}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-[#C7E0F0] flex items-center justify-center text-grey-500 hover:text-navy hover:border-navy transition-colors bg-white/70"
+              >
+                <LinkedInIcon size={13} />
+              </a>
+            )}
+            {founder.facebook && (
+              
+               <a href={founder.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-[#C7E0F0] flex items-center justify-center text-grey-500 hover:text-navy hover:border-navy transition-colors bg-white/70"
+              >
+                <FacebookIcon size={13} />
+              </a>
+            )}
           </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  ))}
+</div>
 
           {/* Leadership Team */}
           <ScrollReveal delay={0.2}>
-            <h3 className="font-display font-bold text-white text-lg text-center mt-16 mb-8">Leadership Team</h3>
+            <div className="mt-16 mb-10 flex justify-center">
+              <SectionHeading eyebrow="Leadership Team" light />
+            </div>
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
-            {leadershipTeam.map((person, i) => (
-              <ScrollReveal key={person.name} delay={i * 0.07}>
-                <div className="glass rounded-xl p-5 text-center border border-white/10 hover:-translate-y-1 transition-all duration-300">
-                  <div
-                    className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-display font-bold text-sm"
-                    style={{ background: 'linear-gradient(135deg, #1E252A 0%, #5BA3D1 100%)' }}
-                  >
-                    {person.initials}
-                  </div>
-                  <h4 className="font-display font-bold text-white text-sm leading-tight mb-1">{person.name}</h4>
-                  <p className="text-xs text-teal font-body leading-snug">{person.title}</p>
-                </div>
-              </ScrollReveal>
-            ))}
+<div className="space-y-8">
+  {/* Row 1 — 4 columns */}
+  <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+    {leadershipTeam
+      .filter(person => leadershipImages[person.name])
+      .slice(0, 4)
+      .map((person, i) => (
+        <ScrollReveal key={person.name} delay={i * 0.07}>
+          <div className="flex flex-col items-center text-center">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-4 shadow-md"
+                style={{ background: '#eaf4fb' }}>
+              <img
+                src={`/images/about/${leadershipImages[person.name]}`}
+                alt={person.name}
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <h4 className="font-display font-bold text-navy text-base leading-tight mb-1">{person.name}</h4>
+            <p className="text-sm text-grey-500 font-body leading-snug">{person.title}</p>
           </div>
+        </ScrollReveal>
+      ))}
+  </div>
+
+  {/* Row 2 — centered, same card width as row 1 */}
+  <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+    <div className="hidden sm:block" /> {/* spacer left */}
+    {leadershipTeam
+      .filter(person => leadershipImages[person.name])
+      .slice(4)
+      .map((person, i) => (
+        <ScrollReveal key={person.name} delay={i * 0.07}>
+          <div className="flex flex-col items-center text-center">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-4 shadow-md"
+                style={{ background: '#eaf4fb' }}>
+              <img
+                src={`/images/about/${leadershipImages[person.name]}`}
+                alt={person.name}
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <h4 className="font-display font-bold text-navy text-base leading-tight mb-1">{person.name}</h4>
+            <p className="text-sm text-grey-500 font-body leading-snug">{person.title}</p>
+          </div>
+        </ScrollReveal>
+      ))}
+    <div className="hidden sm:block" /> {/* spacer right */}
+  </div>
+</div>
+
         </Container>
       </section>
 
-      {/* S5, Our Journey GIF */}
+      {/* ── S5 Our Journey GIF ──────────────────────────────────────── */}
       <section className="bg-white">
         <img
           src="/images/about/journey.gif"
@@ -281,106 +393,207 @@ export default function About() {
         />
       </section>
 
-      {/* S6, By the Numbers */}
-      <section className="py-16 bg-navy-800 mesh-bg">
-        <Container>
-          <ScrollReveal>
-            <SectionHeading eyebrow="At a Glance" title="By the Numbers" />
-          </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-10">
-            {impactNumbers.map((stat, i) => (
-              <ScrollReveal key={stat.label} delay={i * 0.07}>
-                <div className="glass rounded-xl p-5 text-center border border-white/10">
-                  <div className="font-display font-bold text-3xl text-teal mb-1">
-                    <AnimatedCounter end={stat.end} suffix={stat.suffix} />
-                  </div>
-                  <p className="text-xs text-white/50 font-body leading-snug">{stat.label}</p>
+      {/* ── S6 + S7 By the Numbers & Where We Work ──────────────────── */}
+<section className="relative overflow-hidden" style={{ minHeight: '800px' }}>
+
+  <img
+    src="/images/about/banner.svg"
+    alt=""
+    aria-hidden="true"
+    className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+  />
+
+  <div className="relative z-10 px-6 lg:px-16">
+
+    {/* By the Numbers — heading left, grid right */}
+    <div className="flex items-start justify-between gap-8 pt-16">
+
+      {/* Left: Heading */}
+      <div className="flex-shrink-0 w-[220px] pt-2">
+        <ScrollReveal>
+          <SectionHeading style={{ 'white-space': 'nowrap' }}
+            eyebrow="At a Glance"
+            titleClassName="whitespace-nowrap"
+            title="By the Numbers"
+            align="left"
+            light
+          />
+        </ScrollReveal>
+      </div>
+
+      {/* Right: 3x2 Stats Grid */}
+      <div className="flex-1 max-w-2xl">
+        <div className="grid grid-cols-3 gap-3 mt-1">
+          {impactNumbers.map((stat, i) => (
+            <ScrollReveal key={stat.label} delay={i * 0.07}>
+              <div className="bg-white rounded-2xl p-5 text-center shadow-sm">
+                <div className="font-display font-bold text-3xl text-navy mb-1">
+                  <CountUp end={stat.end} suffix={stat.suffix} />
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </Container>
-      </section>
+                <p className="text-xs text-grey-500 font-body leading-snug">{stat.label}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
 
-      {/* S7, Global Presence */}
-      <section className="py-16 bg-navy">
-        <Container>
-          <ScrollReveal>
-            <SectionHeading eyebrow="Global Delivery" title="Where We Work" />
-          </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10">
-            {offices.map((office, i) => (
-              <ScrollReveal key={office.city} delay={i * 0.08}>
-                {office.to ? (
-                  <Link to={office.to} className="block group">
-                    <GlassCard hover className="p-6 text-center">
-                      <div className="text-3xl mb-3">{office.flag}</div>
-                      <h3 className="font-display font-bold text-white text-base group-hover:text-teal transition-colors">{office.city}</h3>
-                      <p className="text-white/50 font-body text-xs mt-1">{office.role}</p>
-                    </GlassCard>
-                  </Link>
-                ) : (
-                  <GlassCard hover={false} className="p-6 text-center">
-                    <div className="text-3xl mb-3">{office.flag}</div>
-                    <h3 className="font-display font-bold text-white text-base">{office.city}</h3>
-                    <p className="text-white/50 font-body text-xs mt-1">{office.role}</p>
-                  </GlassCard>
-                )}
-              </ScrollReveal>
-            ))}
-          </div>
-        </Container>
-      </section>
+    </div>
 
-      {/* S8, Awards & Recognition */}
-      <section className="py-20 bg-surface section-light">
-        <Container>
+    {/* Where We Work — heading left, map right */}
+    {/* Where We Work — heading top-right, map below */}
+<div className="flex justify-end mt-16 px-6 lg:px-16 pb-24">
+  <div className="w-full max-w-2xl">
+
+    <ScrollReveal>
+      <SectionHeading
+        eyebrow="Global Delivery"
+        title="Where We Work"
+        align="left"
+        light
+      />
+    </ScrollReveal>
+
+    {/* Map pins container */}
+    <div className="relative mt-6" style={{ height: '340px' }}>
+      {[
+        { city: 'Pune, India',       role: 'Headquarters & Global Delivery Centre', flag: '🇮🇳', top: '60%', left: '65%' },
+        { city: 'Sydney, Australia', role: 'Client Services & AU Delivery',         flag: '🇦🇺', top: '99%', left: '85%' },
+        { city: 'Singapore',         role: 'Asia-Pacific Office',                   flag: '🇸🇬', top: '73%', left: '95%' },
+        { city: 'Europe',            role: 'European Office',                       flag: '🇪🇺', top: '30%', left: '40%' },
+      ].map((pin, i) => (
+        <ScrollReveal key={pin.city} delay={i * 0.1}>
+          <div
+            className="absolute group cursor-pointer"
+            style={{ top: pin.top, left: pin.left, transform: 'translate(-50%, -50%)' }}
+          >
+            {/* Hover tooltip pill */}
+            <div
+              className="absolute bottom-full left-1/2 mb-3 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-30"
+              style={{ transform: 'translateX(-50%)' }}
+            >
+              <div
+                className="rounded-[2rem] px-8 py-4 text-center"
+                style={{
+                  background: 'rgba(255,255,255,0.25)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  border: '1.5px solid rgba(255,255,255,0.7)',
+                  boxShadow: '0 8px 32px rgba(100,160,210,0.18)',
+                  minWidth: '300px',
+                }}
+              >
+                <p className="font-display font-bold text-[#5a9fc4] text-xl mb-1">
+                  {pin.city} {pin.flag}
+                </p>
+                <p className="text-grey-600 font-body text-base leading-snug">{pin.role}</p>
+              </div>
+            </div>
+
+            {/* Flag circle */}
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md border-2 border-white/60 transition-transform duration-200 group-hover:scale-110"
+              style={{
+                background: 'rgba(255,255,255,0.55)',
+                backdropFilter: 'blur(6px)',
+                boxShadow: '0 2px 12px rgba(58,138,181,0.2)',
+              }}
+            >
+              {pin.flag}
+            </div>
+
+            {/* Glow under circle */}
+            <div
+              className="w-8 h-2 rounded-full mx-auto mt-1 opacity-25"
+              style={{ background: 'radial-gradient(ellipse, #3a8ab5, transparent)' }}
+            />
+          </div>
+        </ScrollReveal>
+      ))}
+    </div>
+
+  </div>
+</div>
+
+  </div>
+</section>
+
+      {/* ── S8 Awards & Recognition ─────────────────────────────────── */}
+      <section className="py-20 bg-white relative overflow-hidden">
+
+        <div className="absolute inset-0 opacity-30 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 80% 50%, #daeaf6 0%, transparent 60%)' }} />
+
+        <Container className="relative z-10">
           <ScrollReveal>
             <SectionHeading
-              eyebrow="Recognised for what we build."
-              title="Awards"
+              eyebrow="Awards"
+              title="Recognised for what we build"
               light
             />
           </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-10">
-            {aboutAwards.map((award, i) => (
-              <ScrollReveal key={award.name} delay={i * 0.05}>
-                {/* TODO: Replace text with <img src={award.logo} alt={award.name} className="h-10 object-contain mx-auto" /> when logos uploaded */}
-                <div className="border border-gray-200 rounded-xl p-4 flex items-center justify-center h-24 text-center bg-white hover:border-teal/30 hover:-translate-y-0.5 transition-all duration-200">
-                  <p className="text-xs font-display font-semibold text-grey-700 leading-snug">{award.name}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+
+          <ScrollReveal delay={0.1}>
+            <div className="rounded-2xl p-8 relative overflow-hidden mt-10">
+              <img
+                src="/images/about/award-banner.svg"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+              />
+              <div className="relative z-10 flex flex-wrap justify-center gap-3">
+                {aboutAwards.map((award, i) => {
+                  const isBlue = i % 3 === 0
+                  return (
+                    <ScrollReveal key={award.name} delay={i * 0.04}>
+                      <div
+                        className={`rounded-full px-5 py-2.5 border font-display font-semibold text-sm cursor-default
+                          hover:-translate-y-0.5 hover:shadow-md transition-all duration-200
+                          ${isBlue
+                            ? 'border-blue-300 text-blue-500 bg-white/80'
+                            : 'border-navy/20 text-navy bg-white/80'
+                          }`}
+                      >
+                        {award.name}
+                      </div>
+                    </ScrollReveal>
+                  )
+                })}
+              </div>
+            </div>
+          </ScrollReveal>
         </Container>
       </section>
 
-      {/* S9, Certifications */}
-      <section className="py-16 bg-navy mesh-bg">
+      {/* ── S9 Certifications ───────────────────────────────────────── */}
+      <section className="py-16 bg-white">
         <Container>
           <ScrollReveal>
-            <SectionHeading eyebrow="Credentials" title="Certified. Accredited. Trusted." />
+            <SectionHeading
+              eyebrow="Credentials"
+              title="Certified. Accredited. Trusted."
+              light
+            />
           </ScrollReveal>
-          <div className="flex flex-wrap justify-center gap-4 mt-10">
-            {trustBadges.map((badge, i) => (
-              <ScrollReveal key={badge.label} delay={i * 0.06}>
-                <div className="glass rounded-xl px-6 py-4 border border-teal/20 text-center min-w-[120px]">
-                  <p className="font-display font-bold text-teal text-base">{badge.label}</p>
-                  <p className="text-xs text-white/40 font-body">{badge.sublabel}</p>
+
+          {/* Badges row with dividers */}
+          <ScrollReveal delay={0.1}>
+            <div className="flex flex-wrap justify-center items-stretch mt-6">
+              {trustBadges.map((badge, i) => (
+                <div key={badge.label} className="flex items-center">
+                  {i !== 0 && (
+                    <div className="mx-2 flex-shrink-0" style={{ width: '1px', height: '48px', background: 'linear-gradient(to bottom, transparent 0%, #5BA3D1 30%, #5BA3D1 70%, transparent 100%)' }} />
+                  )}
+                  <div className="px-6 py-2 text-center">
+                    <p className="font-display font-bold text-navy text-base leading-tight">{badge.label}</p>
+                    <p className="text-grey-400 font-body text-sm mt-0.5">{badge.sublabel}</p>
+                  </div>
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </Container>
       </section>
 
-      {/* S10, CTA */}
-      <CTABanner
-        title="22 Years of Expertise. Ready to Put It to Work for You."
-        subtitle="We've delivered 500+ projects across 12 industries. Let's talk about yours."
-        ctaLabel="Start the Conversation"
-        ctaTo="/contact"
-      />
     </>
   )
 }

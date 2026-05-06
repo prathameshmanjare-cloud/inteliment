@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Sparkles, Clock, TrendingDown, GitBranch, TrendingUp} from 'lucide-react'
+import { Sparkles, Clock, TrendingDown, GitBranch, TrendingUp,Sparkle} from 'lucide-react'
 import { Database, LayoutList, Lightbulb, Timer, XCircle, Layers, BookOpen, Cpu, Zap, ArrowRight, ArrowDown, ArrowLeft} from 'lucide-react'
 import blueIcon from '@/assets/home/blue-icon.svg'
 import iconOrch from '@/assets/home/icon-orch.svg'
@@ -871,14 +871,14 @@ function ThirdSection() {
   const newSteps = [
     { icon: Database,   label: "Data" },
     { icon: Layers,     label: "Context" },
-    { icon: BookOpen,   label: "Recommendations" },
+    { icon: BookOpen,   label: "Recommend ations" },
     { icon: Cpu,        label: "Automated Action" },
     { icon: TrendingUp, label: "Measurable Outcomes", highlight: true },
   ];
 
   const bottomCards = [
-    { title: "Reduced TCO",               sub: "Simplified Stack, Fewer Tools, Lower Costs.",         delay: 8 },
-    { title: "Better Financial Outcomes", sub: "Faster decisions, higher conversion, reduced waste.", delay: 9 },
+    { title: "Reduced TCO",               sub: "Simplified stack,fewer tools,lower costs,without losing capability.",         delay: 8 },
+    { title: "Better Financial Outcomes", sub: "Faster decisions, higher conversion, reduced waste. Every outcome tracked from signal to result.", delay: 9 },
   ];
 
   function StepCard({ icon: Icon, label, faded, highlight, isNew }) {
@@ -888,6 +888,8 @@ function ThirdSection() {
         whileTap={{ scale: 0.97 }}
         style={{
           display: "flex",
+
+
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
@@ -997,51 +999,54 @@ function ThirdSection() {
   }
 
   function ModelBox({ title, steps, isNew, delay }) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          width: "100%",
-          borderRadius: 16,
-          border: isNew ? "1.5px solid rgba(91,163,209,0.35)" : "1px solid rgba(91,163,209,0.18)",
-          background: isNew
-            ? "linear-gradient(135deg, rgba(210,234,248,0.65) 0%, rgba(230,244,252,0.50) 100%)"
-            : "linear-gradient(135deg, #C0CDD6 10%, #C4D3DC 100%)",
-          padding: "24px 20px 28px",
-          backgroundImage: isNew
-            ? `linear-gradient(rgba(255,255,255,0.9) 1px, transparent 1px),
-               linear-gradient(90deg, rgba(255,255,255,0.9) 1px, transparent 1px),
-               linear-gradient(135deg, rgba(210,234,248,0.65) 0%, rgba(230,244,252,0.50) 100%)`
-            : `linear-gradient(rgba(255,255,255,1) 1.5px, transparent 1.5px),
-               linear-gradient(90deg, rgba(255,255,255,1) 1.5px, transparent 1.5px),
-               rgba(234,244,250,0.75)`,
-          backgroundSize: "120px 120px, 120px 120px, 100% 100%",
-          boxShadow: isNew
-            ? "0 4px 24px rgba(91,163,209,0.14)"
-            : "0 2px 12px rgba(91,163,209,0.06)",
-        }}
-      >
-        <p style={{
-          fontSize: 16,
-          fontWeight: 700,
-          letterSpacing: "0.08em",
-          color: isNew ? "#1a5a84" : "#4a6f8a",
-          textAlign: "center",
-          marginBottom: 20,
-          fontFamily: "'Public Sans', sans-serif",
-        }}>
-          {title}
-        </p>
-        <div style={{ overflowX: "auto", paddingBottom: 4 }}>
-          <div style={{ minWidth: "fit-content", margin: "0 auto" }}>
-            <FlowRow steps={steps} isNew={isNew} animDelay={delay + 0.1} />
-          </div>
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        position: "relative",          // ← ADD THIS
+        width: "100%",
+        borderRadius: 16,
+        border: isNew ? "1.5px solid rgba(91,163,209,0.35)" : "1px solid rgba(91,163,209,0.18)",
+        background: isNew
+          ? "linear-gradient(135deg, rgba(210,234,248,0.65) 0%, rgba(230,244,252,0.50) 100%)"
+          : "linear-gradient(135deg, #C0CDD6 10%, #C4D3DC 100%)",
+        padding: "24px 20px 28px",
+        backgroundImage: isNew
+          ? `linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
+             linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px),
+             linear-gradient(135deg, rgba(210,234,248,0.65) 0%, rgba(230,244,252,0.50) 100%)`
+          : `linear-gradient(rgba(255,255,255,1) 1.5px, transparent 1.5px),
+             linear-gradient(90deg, rgba(255,255,255,1) 1.5px, transparent 1.5px),
+             rgba(234,244,250,0.75)`,
+        backgroundSize: "120px 120px, 120px 120px, 100% 100%",
+        boxShadow: isNew
+          ? "0 4px 24px rgba(91,163,209,0.14)"
+          : "0 2px 12px rgba(91,163,209,0.06)",
+      }}
+    >
+      {/* Title — back to simple <p>, no wrapper div */}
+      <p style={{
+        fontSize: 16,
+        fontWeight: 700,
+        letterSpacing: "0.08em",
+        color: isNew ? "#1a5a84" : "#4a6f8a",
+        textAlign: "center",
+        marginBottom: 20,
+        fontFamily: "'Public Sans', sans-serif",
+      }}>
+        {title}
+      </p>
+
+      <div style={{ overflowX: "auto", paddingBottom: 5,paddingTop:5 }}>
+        <div style={{ minWidth: "fit-content", margin: "0 auto" }}>
+          <FlowRow steps={steps} isNew={isNew} animDelay={delay + 0.1} />
         </div>
-      </motion.div>
-    );
-  }
+      </div>
+    </motion.div>
+  );
+}
 
   return (
     <>

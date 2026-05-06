@@ -6,6 +6,15 @@ import rightLines from '../../../assets/decision-intelligence/RightSvgLines.svg'
 import leftLines from '../../../assets/decision-intelligence/LeftSvgLines.svg';
 import midIco from '../../../assets/decision-intelligence/MidIco.svg';
 
+const dimensionItems = [
+  'Orientation',
+  'Time horizon',
+  'Output',
+  'User',
+  'Governance',
+  'Latency',
+];
+
 const biItems = [
   'What happened',
   'Reports and dashboards',
@@ -105,6 +114,44 @@ const renderComparisonCard = (title, items, tone = 'left') => {
   );
 };
 
+const renderDimensionCard = () => (
+  <motion.div
+    whileHover={{ y: -6, scale: 1.015 }}
+    transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+    className="relative z-20 w-[14rem] sm:w-[15rem] rounded-[14px] border border-white/30 bg-white/5 backdrop-blur-sm px-6 py-7 text-center shadow-[inset_0_2px_0_rgba(255,255,255,0.6),inset_0_-1px_0_rgba(255,255,255,0.1),0_8px_32px_rgba(120,187,232,0.1)] transition-shadow duration-300 hover:shadow-[inset_0_2px_0_rgba(255,255,255,0.8),inset_0_-1px_0_rgba(255,255,255,0.15),0_16px_48px_rgba(120,187,232,0.2)]"
+  >
+    <div className="pointer-events-none absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,_rgba(120,187,232,0.15)_0%,rgba(255,255,255,0)_70%)] blur-xl" />
+    <div className="-mx-6 mb-3 px-6 pt-1">
+      <div className="relative overflow-hidden border-y border-white/35 bg-[linear-gradient(90deg,rgba(255,255,255,0.18)_0%,rgba(255,255,255,0.5)_14%,rgba(255,255,255,0.78)_50%,rgba(255,255,255,0.5)_86%,rgba(255,255,255,0.18)_100%)] py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),inset_0_-1px_0_rgba(120,187,232,0.2)]">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/80" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-10 w-3/4 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,_rgba(255,255,255,0.22)_0%,rgba(255,255,255,0)_72%)]" />
+        <div className="relative flex items-center justify-center">
+          <h3 className="font-display text-[1.08rem] font-semibold leading-tight tracking-[-0.02em] text-[#49535d] drop-shadow-[0_1px_0_rgba(255,255,255,0.6)] sm:text-[1.12rem]">
+            Dimension
+          </h3>
+        </div>
+      </div>
+    </div>
+    <motion.ul
+      className="space-y-5 mt-8 relative z-10"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.35 }}
+    >
+      {dimensionItems.map((item) => (
+        <motion.li
+          key={item}
+          className="font-display text-[1.02rem] leading-snug font-semibold text-[#49535d]"
+          variants={itemVariants}
+        >
+          {item}
+        </motion.li>
+      ))}
+    </motion.ul>
+  </motion.div>
+);
+
 const DifferenceSection = () => {
   return (
     <section id="difference" className="relative py-24 lg:py-32 bg-[#1A1A1A] overflow-hidden">
@@ -191,11 +238,14 @@ const DifferenceSection = () => {
               alt=""
               className="h-auto w-[13rem] object-contain lg:-mr-5 xl:w-[15rem] xl:-mr-7"
             />
-            <img
-              src={midIco}
-              alt=""
-              className="relative z-20 h-auto w-[5.5rem] object-contain xl:w-[6.25rem]"
-            />
+            <div className="relative flex items-center justify-center">
+              <img
+                src={midIco}
+                alt=""
+                className="absolute z-10 h-auto w-[6.5rem] object-contain xl:w-[7.5rem] opacity-70"
+              />
+              {renderDimensionCard()}
+            </div>
             <img
               src={rightLines}
               alt=""
@@ -224,7 +274,7 @@ const DifferenceSection = () => {
               <div className="relative transition-[box-shadow,transform] duration-300 group-hover:[&>div]:shadow-[0_22px_54px_rgba(66,173,236,0.34)]">
                 {renderComparisonCard('Decision Intelligence', diItems, 'right')}
               </div>
-              <SparkleIcon
+              <SparkleIcon still
                 className="pointer-events-none absolute -right-10 -top-10 z-40 hidden lg:block"
                 size={84}
                 color="#8ed6ff"
@@ -232,7 +282,7 @@ const DifferenceSection = () => {
                 orbitRadius={9}
                 orbitDuration={5}
               />
-              <SparkleIcon
+              <SparkleIcon still
                 className="pointer-events-none absolute -bottom-8 -left-10 z-40 hidden lg:block"
                 size={76}
                 color="#8ed6ff"
@@ -240,7 +290,7 @@ const DifferenceSection = () => {
                 orbitRadius={11}
                 orbitDuration={5.6}
               />
-              <SparkleIcon
+              <SparkleIcon still
                 className="pointer-events-none absolute -right-2 top-10 z-40 hidden lg:block"
                 size={22}
                 color="#b8e7ff"
@@ -248,7 +298,7 @@ const DifferenceSection = () => {
                 orbitRadius={5}
                 orbitDuration={4.2}
               />
-              <SparkleIcon
+              <SparkleIcon still
                 className="pointer-events-none absolute -right-16 top-12 z-40 hidden lg:block"
                 size={16}
                 color="#8ed6ff"
@@ -256,7 +306,7 @@ const DifferenceSection = () => {
                 orbitRadius={4}
                 orbitDuration={3.8}
               />
-              <SparkleIcon
+              <SparkleIcon still
                 className="pointer-events-none absolute -bottom-1 left-8 z-40 hidden lg:block"
                 size={24}
                 color="#b8e7ff"
@@ -264,7 +314,7 @@ const DifferenceSection = () => {
                 orbitRadius={6}
                 orbitDuration={4.6}
               />
-              <SparkleIcon
+              <SparkleIcon still
                 className="pointer-events-none absolute -bottom-14 -left-2 z-40 hidden lg:block"
                 size={18}
                 color="#8ed6ff"
